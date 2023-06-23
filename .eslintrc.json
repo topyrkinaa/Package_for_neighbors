@@ -8,8 +8,10 @@
         "plugin:react/recommended",
         "plugin:react/jsx-runtime",
         "plugin:react-hooks/recommended",
+        "plugin:jsx-a11y/recommended",
         "plugin:import/recommended",
-        "airbnb"
+        "airbnb",
+        "prettier"
     ],
     "overrides": [
     ],
@@ -22,6 +24,10 @@
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        "linebreak-style": ["error", "windows"]
+        "linebreak-style": ["error", "windows"],
+        "react/function-component-definition": "off",
+        "react/react-in-jsx-scope": "off",
+        "arrow-body-style": "off",
+        "no-nested-ternary": "off"
     }
 }
