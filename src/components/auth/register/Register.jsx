@@ -12,7 +12,7 @@ function Register() {
       <TextField fullWidth margin='normal' label="Email" variant="outlined" placeholder="Введите ваш email" />
       <TextField type="password" fullWidth margin='normal' label="Password" variant="outlined" placeholder="Введите ваш пароль" />
       <TextField type="password" fullWidth margin='normal' label="Password" variant="outlined" placeholder="Повторите ваш пароль" />
-      <Button sx={{fontFamily:'Popins',marginTop: 2, marginBottom: 2, width: '60%'}} variant="contained">Регистрация</Button>
+      <Button type="submit" sx={{fontFamily:'Popins',marginTop: 2, marginBottom: 2, width: '60%'}} variant="contained" onClick={() => console.log("Регистрация")}>Регистрация</Button>
       <Typography variant="body1" sx={{fontFamily:'Popins'}}>У вас есть аккаунт?<span className="incitingText">Авторизация</span></Typography>
     </>
   );

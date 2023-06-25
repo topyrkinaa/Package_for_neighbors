@@ -7,7 +7,7 @@ function Recovery() {
       <Typography variant="h2" fontFamily='Popins' textAlign='center'>Восстановление пароля</Typography>
       <Typography variant="body1" marginBottom={3} fontFamily='Popins' textAlign='center'>Введите данные для восстановления пароля</Typography>
       <TextField fullWidth margin='normal' label="Email" variant="outlined" placeholder="Введите ваш email" />
-      <Button sx={{fontFamily:'Popins',marginTop: 2, marginBottom: 2, width: '60%'}} variant="contained">Получить код</Button>
+      <Button type="submit" sx={{fontFamily:'Popins',marginTop: 2, marginBottom: 2, width: '60%'}} variant="contained" onClick={() => console.log("Восстановление пароля")}>Получить код</Button>
     </>
   );
 }
