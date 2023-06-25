@@ -4,6 +4,7 @@ import { Box } from '@mui/material';
 import './AuthRoot.css';
 import Login from './login/Login';
 import Register from './register/Register';
+import Recovery from './recovery/Recovery';
 
 function AuthRootComponents() {
   const location = useLocation()
@@ -21,7 +22,7 @@ function AuthRootComponents() {
           borderRadius={5}
           boxShadow='5px 5px 10px #ccc'
         >
-        {location.pathname === '/login' ? <Login /> : location.pathname === '/register' ? <Register /> : null}
+        {location.pathname === '/login' ? <Login /> : location.pathname === '/register' ? <Register /> : location.pathname === '/recovery' ? <Recovery /> : null}
         </Box>
       </div>
     </div>

@@ -15,6 +15,7 @@ function App() {
         </Route>
         <Route path="login" element={<AuthRootComponents />} />
         <Route path="register" element={<AuthRootComponents />} />
+        <Route path="recovery" element={<AuthRootComponents />} />
       </Routes>
     </div>
   );
