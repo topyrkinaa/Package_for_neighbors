@@ -1,7 +1,10 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import { TextField, Button,Typography } from '@mui/material';
+import PropTypes from 'prop-types';
+
 
 function Login(props) {
+
   const {setPassword, setEmail} = props
   return (
     <>
@@ -15,5 +18,14 @@ function Login(props) {
     </>
   );
 }
+
+Login.defaultProps = {
+  setPassword: " ",
+  setEmail: ""
+};
+Login.propTypes = {
+  setPassword: PropTypes.string,
+  setEmail: PropTypes.string
+};
 
 export default Login;

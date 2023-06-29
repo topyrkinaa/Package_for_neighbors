@@ -32,7 +32,18 @@ function AuthRootComponents() {
           borderRadius={5}
           boxShadow='5px 5px 10px #ccc'
         >
-        {location.pathname === '/login' ? <Login setEmail={setEmail} setPassword={setPassword} /> : location.pathname === '/register' ? <Register /> : location.pathname === '/recovery' ? <Recovery /> : null}
+         {(() => {
+          if (location.pathname === '/login') {
+            return <Login setEmail={setEmail} setPassword={setPassword} />;
+          }
+          if (location.pathname === '/register') {
+            return <Register />;
+          }
+          if (location.pathname === '/recovery') {
+            return <Recovery />;
+          }
+          return null;
+        })()}
         </Box>
       </form>
     </div>
