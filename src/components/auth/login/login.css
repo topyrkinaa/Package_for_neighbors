@@ -1,0 +1,30 @@
+.root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    .form {
+        width: 100%;
+        .incitingText{
+            color: #1900D5;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .login-button {
+            display: flex;
+            justify-content: center;
+            margin-top: 2px;
+            width: 60%;
+            margin-bottom: 2px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+      }
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    font-family: 'Popins';
+  }
