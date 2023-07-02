@@ -16,8 +16,6 @@ function AuthRootComponents() {
     console.log(email)
     console.log(password)
   }
-
-
   return (
     <div className='root'> 
       <form className='form' onSubmit={handleSubmit}>
