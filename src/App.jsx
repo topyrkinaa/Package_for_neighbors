@@ -5,6 +5,7 @@ import Home from './components/home/Home';
 import PrivateRoute from './utils/router/privateRoute';
 import AuthRootComponents from './components/auth/AuthRoot';
 import Register from './components/auth/register/Register';
+import Recovery from './components/auth/recovery/Recovery';
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         </Route>
         <Route path="login" element={<AuthRootComponents />} />
         <Route path="register" element={<Register />} />
-        <Route path="recovery" element={<AuthRootComponents />} />
+        <Route path="recovery" element={<Recovery />} />
       </Routes>
     </div>
   );
