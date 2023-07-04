@@ -2,7 +2,7 @@ import React, { useEffect} from 'react';
 import './register.css';
 import { TextField, Button, Typography,Box } from '@mui/material';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 
@@ -21,8 +21,7 @@ const formSchema = z.object({
   message: 'Введенные пароли не совпадают',
 })
 
-// type FormSchemaType = z.infer<typeof FormSchema>;
-// const FormSchema = formSchema.def;  
+type FormSchema = z.infer<typeof formSchema>
 
 function Register() {
   const {
@@ -31,13 +30,13 @@ function Register() {
     reset,
     setFocus,
     formState: { isDirty, isSubmitting, errors },
-  } = useForm({ resolver: zodResolver(formSchema) });
+  } = useForm<FormSchema>({ resolver: zodResolver(formSchema) })
 
   // обработчик отправки формы
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
-  };
+  const onSubmit: SubmitHandler<FormSchema> = (data) => {
+    console.log(data)
+    reset()
+  }
 
 
   useEffect(() => {
@@ -74,7 +73,7 @@ function Register() {
         />
         {errors.username && (
           <span role='alert' className='error'>
-          {errors.username.message}
+          {errors.username?.message}
           </span>
         )}
         <TextField
@@ -89,7 +88,7 @@ function Register() {
         />
         {errors.surname && (
         <span role='alert' className='error'>
-          {errors.surname.message}
+          {errors.surname?.message}
         </span>
         )}
         <TextField
@@ -104,7 +103,7 @@ function Register() {
         />
         {errors.patronymic && (
         <span role='alert' className='error'>
-          {errors.patronymic.message}
+          {errors.patronymic?.message}
         </span>
         )}
         <TextField
@@ -119,7 +118,7 @@ function Register() {
         />
         {errors.email && (
         <span role='alert' className='error'>
-          {errors.email.message}
+          {errors.email?.message}
         </span>
         )}
         <TextField 
@@ -135,7 +134,7 @@ function Register() {
         />
         {errors.password && (
         <span role='alert' className='error'>
-          {errors.password.message}
+          {errors.password?.message}
         </span>
         )}
         <TextField 
@@ -151,7 +150,7 @@ function Register() {
         />
           {errors.confirmPassword && (
         <span role='alert' className='error'>
-          {errors.confirmPassword.message}
+          {errors.confirmPassword?.message}
         </span>
         )}
         <Button

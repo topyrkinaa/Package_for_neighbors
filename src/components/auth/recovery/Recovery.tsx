@@ -2,13 +2,15 @@ import React, { useEffect} from 'react';
 import './recovery.css';
 import { TextField, Button, Typography,Box } from '@mui/material';
 import { z } from 'zod';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 
 const formSchema = z.object({
   email: z.string().email({ message:'Некорректный email'})
 })
+
+type FormSchema = z.infer<typeof formSchema>
 
 function Recovery() {
   const {
@@ -17,17 +19,18 @@ function Recovery() {
     reset,
     setFocus,
     formState: { isDirty, isSubmitting, errors },
-  } = useForm({ resolver: zodResolver(formSchema) });
+  } =  useForm<FormSchema>({ resolver: zodResolver(formSchema) })
 
   // обработчик отправки формы
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
-  };
+  const onSubmit: SubmitHandler<FormSchema> = (data) => {
+    console.log(data)
+    reset()
+  }
+
 
   useEffect(() => {
     // устанавливаем фокус на первое поле (имя пользователя) после монтирования компонента
-    setFocus("username")
+    setFocus("email")
   }, [setFocus])
 
   return (
