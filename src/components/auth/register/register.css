@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  .form {
+      width: 100%;
+      .register-button {
+        display: flex;
+        justify-content: center;
+      }
+      .incitingText{
+          color: #1900D5;
+          margin-left: 10px;
+          cursor: pointer;
+      }
+  }
+}
+.error {
+  color: red;
+  font-size: 12px;
+  font:'Popins';
+}
