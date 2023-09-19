@@ -4,8 +4,10 @@ import { TextField, Button, Typography } from '@mui/material';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import styled from '@emotion/styled';
 import zodNameValidation from './validation.message';
 import MessagesRegister from './register.messages';
+
 
 const fieldSchema = {
   username: zodNameValidation('Имя'),
@@ -25,6 +27,26 @@ const formSchema = z
     path: ['confirmPassword'],
     message: 'Введенные пароли не совпадают',
   });
+
+const StyledRegister = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  }`;
+
+const StyledDiv = styled.div`
+  display: flex,
+  justifyContent: center,
+  alignItems: center,
+  flexDirection: column,
+  margin: auto,
+  width: 30%,
+  padding: 20,
+  borderRadius: 10,
+  boxShadow: 5px 5px 10px #ccc,
+  `;
 
 function Register() {
   const {
@@ -50,20 +72,8 @@ function Register() {
   }, [setFocus]);
 
   return (
-    <div className="root">
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          margin: 'auto',
-          width: '30%',
-          padding: 20,
-          borderRadius: 10,
-          boxShadow: '5px 5px 10px #ccc',
-        }}
-      >
+    <StyledRegister>
+      <StyledDiv>
         <Typography variant="h2" fontFamily="Popins" textAlign="center">
           Регистрация
         </Typography>
@@ -209,8 +219,8 @@ function Register() {
             </Typography>
           </div>
         </form>
-      </div>
-    </div>
+      </StyledDiv>
+    </StyledRegister>
   );
 }
 
