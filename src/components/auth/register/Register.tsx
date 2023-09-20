@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
-import './register.css';
 import { TextField, Button, Typography } from '@mui/material';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import styled from '@emotion/styled';
+import { zodResolver } from '@hookform/resolvers/zod';
 import zodNameValidation from './validation.message';
 import MessagesRegister from './register.messages';
-
+import Colors from '../../../utils/colors';
 
 const fieldSchema = {
   username: zodNameValidation('Имя'),
@@ -28,25 +27,11 @@ const formSchema = z
     message: 'Введенные пароли не совпадают',
   });
 
-const StyledRegister = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  }`;
-
-const StyledDiv = styled.div`
-  display: flex,
-  justifyContent: center,
-  alignItems: center,
-  flexDirection: column,
-  margin: auto,
-  width: 30%,
-  padding: 20,
-  borderRadius: 10,
-  boxShadow: 5px 5px 10px #ccc,
-  `;
+const StyledSpan = styled.span`
+  color: ${Colors.const.red};
+  font-size: 12px;
+  font:'Popins';
+`;
 
 function Register() {
   const {
@@ -72,8 +57,27 @@ function Register() {
   }, [setFocus]);
 
   return (
-    <StyledRegister>
-      <StyledDiv>
+    <div
+    style={{ 
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100vw',
+      height: '100vh',
+    }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column',
+          margin: 'auto',
+          width: '25%',
+          padding: 20,
+          borderRadius: 10,
+          boxShadow: '5px 5px 10px #ccc',
+        }}
+      >
         <Typography variant="h2" fontFamily="Popins" textAlign="center">
           Регистрация
         </Typography>
@@ -85,7 +89,7 @@ function Register() {
         >
           Введите данные для регистрации
         </Typography>
-        <form className="form" onSubmit={handleSubmit(onSubmit)}>
+        <form className="form" onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
           <div
             style={{
               display: 'flex',
@@ -107,9 +111,9 @@ function Register() {
               onBlur={() => trigger('username')}
             />
             {errors.username && (
-              <span role='alert' className='error'>
+              <StyledSpan role='alert'>
               {errors.username?.message}
-              </span>
+              </StyledSpan>
             )}
             <TextField
               {...register('surname')}
@@ -123,9 +127,9 @@ function Register() {
               onBlur={() => trigger('surname')}
             />
             {errors.surname && (
-              <span role='alert' className='error'>
+              <StyledSpan role='alert'>
               {errors.surname?.message}
-              </span>
+              </StyledSpan>
             )}
             <TextField
               {...register('patronymic')}
@@ -139,9 +143,9 @@ function Register() {
               onBlur={() => trigger('patronymic')}
             />
             {errors.patronymic && (
-              <span role='alert' className='error'>
+              <StyledSpan role='alert'>
               {errors.patronymic?.message}
-              </span>
+              </StyledSpan>
             )}
             <TextField
               {...register('email')}
@@ -155,9 +159,9 @@ function Register() {
               onBlur={() => trigger('email')}
             />
             {errors.email && (
-              <span role='alert' className='error'>
+              <StyledSpan role='alert'>
               {errors.email?.message}
-              </span>
+              </StyledSpan>
             )}
             <TextField
               {...register('password')}
@@ -172,9 +176,9 @@ function Register() {
               onBlur={() => trigger('password')}
             />
             {errors.password && (
-              <span role='alert' className='error'>
+              <StyledSpan role='alert'>
               {errors.password?.message}
-              </span>
+              </StyledSpan>
             )}
             <TextField
               {...register('confirmPassword')}
@@ -189,19 +193,20 @@ function Register() {
               onBlur={() => trigger('confirmPassword')}
             />
             {errors.confirmPassword && (
-              <span role='alert' className='error'>
+              <StyledSpan role='alert'>
               {errors.confirmPassword?.message}
-              </span>
+              </StyledSpan>
             )}
             <Button
               type="submit"
-              className="register-button"
               sx={{
                 fontFamily: 'Popins',
                 marginTop: 2,
                 marginBottom: 2,
                 width: '80%',
                 margin: '0 auto',
+                display: 'flex',
+                justifyContent: 'center'
               }}
               variant="contained"
               disabled={!isDirty || isSubmitting}
@@ -215,12 +220,18 @@ function Register() {
               sx={{ fontFamily: 'Popins' }}
             >
               У вас есть аккаунт?
-              <span className="incitingText">Авторизация</span>
+              <span style={{
+                color: Colors.const.blue,
+                marginLeft: 10,
+                cursor: 'pointer',
+              }}
+            >
+              Авторизация</span>
             </Typography>
           </div>
         </form>
-      </StyledDiv>
-    </StyledRegister>
+      </div>
+    </div>
   );
 }
 
