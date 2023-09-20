@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography, Box } from '@mui/material';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
@@ -57,26 +57,23 @@ function Register() {
   }, [setFocus]);
 
   return (
-    <div
-    style={{ 
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100vw',
-      height: '100vh',
-    }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          margin: 'auto',
-          width: '25%',
-          padding: 20,
-          borderRadius: 10,
-          boxShadow: '5px 5px 10px #ccc',
-        }}
+    <Box
+      display= 'flex'
+      justifyContent= 'center'
+      alignItems='center'
+      width= '100vw'
+      height= '100vh'
+    >
+      <Box
+          display= 'flex'
+          justifyContent= 'center'
+          alignItems= 'center'
+          flexDirection= 'column'
+          margin= 'auto'
+          width= '25%'
+          padding= {3}
+          borderRadius= {5}
+          boxShadow= '5px 5px 10px #ccc'
       >
         <Typography variant="h2" fontFamily="Popins" textAlign="center">
           Регистрация
@@ -89,7 +86,7 @@ function Register() {
         >
           Введите данные для регистрации
         </Typography>
-        <form className="form" onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
           <div
             style={{
               display: 'flex',
@@ -230,8 +227,8 @@ function Register() {
             </Typography>
           </div>
         </form>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
