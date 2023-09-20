@@ -6,11 +6,13 @@ import PrivateRoute from './utils/router/privateRoute';
 import Login from './components/auth/login/Login';
 import Register from './components/auth/register/Register';
 import Recovery from './components/auth/recovery/Recovery';
+import Navbar from './components/navbar/navbar';
 
 
 function App() {
   return (
     <div className="App">
+      <Navbar/>
       <Routes>
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />

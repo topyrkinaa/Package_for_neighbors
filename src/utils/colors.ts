@@ -1,8 +1,9 @@
 const Colors = {
     const: {
-      blue: `#1900D5`,
+      blue: `#0546F0`,
       grey: `#ccc`,
       red: `#FF0000`,
+      white: `#FFF`,
     },
 };
 export default Colors;

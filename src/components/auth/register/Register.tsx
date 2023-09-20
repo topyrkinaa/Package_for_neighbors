@@ -3,6 +3,7 @@ import { TextField, Button, Typography, Box } from '@mui/material';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import zodNameValidation from './validation.message';
 import MessagesRegister from './register.messages';
@@ -14,23 +15,19 @@ const fieldSchema = {
   patronymic: zodNameValidation('Фамилия'),
   email: z.string().email({ message: MessagesRegister.errors.email }),
   password: z.string().min(12, { message: 'Пароль слишком короткий' }),
-  confirmPassword: z
-    .string()
-    .min(12, { message: 'Повторите пароль' }),
+  confirmPassword: z.string().min(12, { message: 'Повторите пароль' }),
 };
 
 // Применение эффектов к полям
-const formSchema = z
-  .object(fieldSchema)
-  .refine((data) => data.password === data.confirmPassword, {
-    path: ['confirmPassword'],
-    message: 'Введенные пароли не совпадают',
-  });
+const formSchema = z.object(fieldSchema).refine((data) => data.password === data.confirmPassword, {
+  path: ['confirmPassword'],
+  message: 'Введенные пароли не совпадают',
+});
 
 const StyledSpan = styled.span`
   color: ${Colors.const.red};
   font-size: 12px;
-  font:'Popins';
+  font: 'Montserrat';
 `;
 
 function Register() {
@@ -43,12 +40,12 @@ function Register() {
     trigger,
   } = useForm<ShemaType>({
     resolver: zodResolver(formSchema),
-})
+  });
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
-    console.log(data)
-    reset()
+    console.log(data);
+    reset();
   }
 
   useEffect(() => {
@@ -58,22 +55,20 @@ function Register() {
 
   return (
     <Box
-      display= 'flex'
-      justifyContent= 'center'
-      alignItems='center'
-      width= '100vw'
-      height= '100vh'
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
     >
       <Box
-          display= 'flex'
-          justifyContent= 'center'
-          alignItems= 'center'
-          flexDirection= 'column'
-          margin= 'auto'
-          width= '25%'
-          padding= {3}
-          borderRadius= {5}
-          boxShadow= '5px 5px 10px #ccc'
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDirection="column"
+        margin="auto"
+        width="30%"
+        padding={3}
+        borderRadius={5}
+        boxShadow="5px 5px 10px #ccc"
       >
         <Typography variant="h2" fontFamily="Popins" textAlign="center">
           Регистрация
@@ -87,13 +82,11 @@ function Register() {
           Введите данные для регистрации
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
-          <div
-            style={{
-              display: 'flex',
-              flex: '1 1 auto',
-              flexDirection: 'column',
-              gap: '10px',
-            }}
+          <Box
+            display="flex"
+            flex="1 1 auto"
+            flexDirection="column"
+            gap={1}
           >
             <TextField
               /* eslint-disable react/jsx-props-no-spreading */
@@ -108,8 +101,8 @@ function Register() {
               onBlur={() => trigger('username')}
             />
             {errors.username && (
-              <StyledSpan role='alert'>
-              {errors.username?.message}
+              <StyledSpan role="alert">
+                {errors.username?.message}
               </StyledSpan>
             )}
             <TextField
@@ -124,8 +117,8 @@ function Register() {
               onBlur={() => trigger('surname')}
             />
             {errors.surname && (
-              <StyledSpan role='alert'>
-              {errors.surname?.message}
+              <StyledSpan role="alert">
+                {errors.surname?.message}
               </StyledSpan>
             )}
             <TextField
@@ -140,8 +133,8 @@ function Register() {
               onBlur={() => trigger('patronymic')}
             />
             {errors.patronymic && (
-              <StyledSpan role='alert'>
-              {errors.patronymic?.message}
+              <StyledSpan role="alert">
+                {errors.patronymic?.message}
               </StyledSpan>
             )}
             <TextField
@@ -156,8 +149,8 @@ function Register() {
               onBlur={() => trigger('email')}
             />
             {errors.email && (
-              <StyledSpan role='alert'>
-              {errors.email?.message}
+              <StyledSpan role="alert">
+                {errors.email?.message}
               </StyledSpan>
             )}
             <TextField
@@ -173,8 +166,8 @@ function Register() {
               onBlur={() => trigger('password')}
             />
             {errors.password && (
-              <StyledSpan role='alert'>
-              {errors.password?.message}
+              <StyledSpan role="alert">
+                {errors.password?.message}
               </StyledSpan>
             )}
             <TextField
@@ -190,14 +183,15 @@ function Register() {
               onBlur={() => trigger('confirmPassword')}
             />
             {errors.confirmPassword && (
-              <StyledSpan role='alert'>
-              {errors.confirmPassword?.message}
+              <StyledSpan role="alert">
+                {errors.confirmPassword?.message}
               </StyledSpan>
             )}
             <Button
               type="submit"
               sx={{
-                fontFamily: 'Popins',
+                fontFamily: 'Montserrat',
+                fontWeight: 700,
                 marginTop: 2,
                 marginBottom: 2,
                 width: '80%',
@@ -214,18 +208,22 @@ function Register() {
             <Typography
               variant="body1"
               textAlign="center"
-              sx={{ fontFamily: 'Popins' }}
+              sx={{ fontFamily: 'Popins', color: Colors.const.blue }}
             >
               У вас есть аккаунт?
-              <span style={{
-                color: Colors.const.blue,
-                marginLeft: 10,
-                cursor: 'pointer',
-              }}
-            >
-              Авторизация</span>
+              <Link
+                style={{
+                  color: Colors.const.blue,
+                  marginLeft: 10,
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                }}
+                to="/login"
+              >
+                Авторизация
+              </Link>
             </Typography>
-          </div>
+          </Box>
         </form>
       </Box>
     </Box>

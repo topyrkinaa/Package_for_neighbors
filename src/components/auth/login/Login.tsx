@@ -3,11 +3,10 @@ import { TextField, Button, Typography, Box } from '@mui/material';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
+import { Link } from "react-router-dom";
 import { zodResolver } from '@hookform/resolvers/zod';
 import MessagesRegister from '../register/register.messages';
 import Colors from '../../../utils/colors';
-
-
 
 const fieldSchema = {
   email: z.string().email({ message: MessagesRegister.errors.email }),
@@ -16,13 +15,12 @@ const fieldSchema = {
 
 // Применение эффектов к полям
 const formSchema = z
-  .object(fieldSchema)
-;
+  .object(fieldSchema);
 
 const StyledSpan = styled.span`
   color: ${Colors.const.red};
   font-size: 12px;
-  font:'Popins';
+  font: 'Montserrat';
 `;
 
 function Login() {
@@ -35,13 +33,13 @@ function Login() {
     trigger,
   } = useForm<ShemaType>({
     resolver: zodResolver(formSchema),
-})
+  });
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
-    console.log(data)
-    reset()
-  }
+    console.log(data);
+    reset();
+  };
 
   useEffect(() => {
     // устанавливаем фокус на первое поле (имя пользователя) после монтирования компонента
@@ -50,22 +48,20 @@ function Login() {
 
   return (
     <Box
-      display= 'flex'
-      justifyContent= 'center'
+      display='flex'
+      justifyContent='center'
       alignItems='center'
-      width= '100vw'
-      height= '100vh'
     >
       <Box
-          display= 'flex'
-          justifyContent= 'center'
-          alignItems= 'center'
-          flexDirection= 'column'
-          margin= 'auto'
-          width= '25%'
-          padding= {3}
-          borderRadius= {5}
-          boxShadow= '5px 5px 10px #ccc'
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        flexDirection='column'
+        margin='auto'
+        width='30%'
+        padding={3}
+        borderRadius={5}
+        boxShadow='5px 5px 10px #ccc'
       >
         <Typography variant="h2" fontFamily="Popins" textAlign="center">
           Авторизация
@@ -79,13 +75,11 @@ function Login() {
           Введите данные для авторизации
         </Typography>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
-          <div
-            style={{
-              display: 'flex',
-              flex: '1 1 auto',
-              flexDirection: 'column',
-              gap: '10px',
-            }}
+          <Box
+            display='flex'
+            flex='1 1 auto'
+            flexDirection='column'
+            gap={1}
           >
             <TextField
               /* eslint-disable react/jsx-props-no-spreading */
@@ -101,7 +95,7 @@ function Login() {
             />
             {errors.email && (
               <StyledSpan role='alert'>
-              {errors.email?.message}
+                {errors.email?.message}
               </StyledSpan>
             )}
             <TextField
@@ -118,13 +112,14 @@ function Login() {
             />
             {errors.password && (
               <StyledSpan role='alert'>
-              {errors.password?.message}
+                {errors.password?.message}
               </StyledSpan>
             )}
             <Button
               type="submit"
               sx={{
-                fontFamily: 'Popins',
+                fontFamily: 'Montserrat',
+                fontWeight: 700,
                 marginTop: 2,
                 marginBottom: 2,
                 width: '80%',
@@ -144,21 +139,22 @@ function Login() {
               sx={{ fontFamily: 'Popins' }}
             >
               Забыли пароль?
-              <span style={{
+              <Link style={{
                 color: Colors.const.blue,
                 marginLeft: 10,
                 cursor: 'pointer',
+                textDecoration: 'none',
               }}
-            >
-              Восстановить</span>
+                to='/recovery'
+              >
+                Восстановить</Link>
             </Typography>
-            </div>
+          </Box>
         </form>
       </Box>
     </Box>
   );
 }
-
 
 export default Login;
 export type ShemaType = z.infer<typeof formSchema>;
