@@ -9,7 +9,6 @@ const PORT = config.get('serverPort')
 
 const start =  async () => {
     try {
-        
         app.use(express.json())
         app.use('/api', userRouter)
         app.listen(PORT, () => {

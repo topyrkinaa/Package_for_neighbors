@@ -1,5 +1,6 @@
 create Table users (
-    email VARCHAR(255) PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255),
     username VARCHAR(255),
     surname VARCHAR(255),
     patronymic VARCHAR(255),
