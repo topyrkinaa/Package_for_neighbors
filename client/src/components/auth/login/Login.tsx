@@ -5,8 +5,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { Link } from "react-router-dom";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useDispatch } from 'react-redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { AnyAction } from 'redux';
 import MessagesRegister from '../register/register.messages';
 import Colors from '../../../utils/colors';
+import {login} from '../../../action/user';
+
 
 const fieldSchema = {
   email: z.string().email({ message: MessagesRegister.errors.email }),
@@ -24,10 +29,12 @@ const StyledSpan = styled.span`
 `;
 
 function Login() {
+  const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
+
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     setFocus,
     formState: { isDirty, isSubmitting, errors },
     trigger,
@@ -37,8 +44,8 @@ function Login() {
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
-    console.log(data);
-    reset();
+    dispatch(login(data.email, data.password));
+    // reset();
   };
 
   useEffect(() => {

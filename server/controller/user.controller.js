@@ -1,5 +1,7 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const config = require('config')
 
 class UserController {
     async createUser(req, res) {
@@ -9,9 +11,10 @@ class UserController {
         if (candidate.rows[0].it_does_exist) {
           return res.status(400).json({ message: `User with email ${email} already exist` })
         } 
-        const hashPassword = await bcrypt.hash(password, 15)
+        const hashPassword = await bcrypt.hash(password, 8)
         const newPerson = await db.query(`INSERT INTO users(email, username, surname, patronymic, password) values ($1, $2, $3, $4, $5) RETURNING *`, [email, username, surname, patronymic, hashPassword]) 
-        res.json(newPerson.rows[0])
+        //res.json(newPerson.rows[0])
+        res.json({message: "User was created"})
       } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Internal Server Error', error: error.message })
@@ -61,7 +64,38 @@ class UserController {
         res.status(500).json({ message: 'Internal Server Error', error: error.message })
       }
     }
+
+    async loginUser(req, res) {
+      try {
+        const { email, password } = req.body;
+        const user = await db.query(`SELECT * FROM users WHERE email = $1`, [email]);
+        if (user.rows.length === 0) {
+          return res.status(404).json({ message: "User not found" });
+        }
     
+        const isPassValid = bcrypt.compareSync(password, user.rows[0].password);
+        if (!isPassValid) {
+          return res.status(400).json({ message: "Invalid password" });
+        }
+    
+        const token = jwt.sign({ id: user.rows[0].id }, config.get("secretKey"), {
+          expiresIn: "1h",
+        });
+    
+        return res.json({
+          token,
+          user: {
+            id: user.rows[0].id,
+            username: user.rows[0].username,
+            surname: user.rows[0].surname,
+            patronymic: user.rows[0].patronymic,
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+      }
+    }
   }
   
   module.exports = new UserController();

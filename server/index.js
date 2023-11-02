@@ -7,6 +7,7 @@ const app = express()
 const PORT = config.get('serverPort')
 
 app.use(corsMiddlecare)
+app.use(express.json())
 
 const start =  async () => {
     try {

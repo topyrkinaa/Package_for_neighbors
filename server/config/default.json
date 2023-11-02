@@ -1,3 +1,4 @@
 {
-    "serverPort": 5001
+    "serverPort": 5000,
+    "secretKey": "mern-secret-key"
 }
