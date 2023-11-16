@@ -13,7 +13,6 @@ import HomeChat from './components/chat/HomeChat';
 
 function App() {
   return (
-    
     <div className="App">
       <Navbar/>
       <Routes>
