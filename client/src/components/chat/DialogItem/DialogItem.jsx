@@ -10,8 +10,8 @@ import Avatar from '../Avatar/Avatar';
 
 const getMessageTime = created_at => (
     isToday(created_at)
-        ? format(created_at, 'HH:mm')
-        : format(created_at, 'DD.MM.YYYY')
+      ? format(created_at, 'HH:mm')
+      : format(created_at, 'dd.MM.yyyy')
 );
 
 const DialogItem = ({ user, unreaded, created_at, text, isMe }) => (

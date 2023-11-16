@@ -18,12 +18,12 @@ export default hash => {
 
   return {
     color: tinycolor({ r, g, b })
-      .lighten(10)
-      .saturate(10)
+      .lighten(20)
+      .saturate(20)
       .toHexString(),
     colorLighten: tinycolor({ r, g, b })
-      .lighten(30)
-      .saturate(30)
+      .lighten(50)
+      .saturate(50)
       .toHexString()
   };
 };

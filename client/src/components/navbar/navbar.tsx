@@ -1,7 +1,8 @@
 import React from 'react';
 import { AppBar, Box, CssBaseline, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 import Colors from '../../utils/colors';
 
 interface Props {
@@ -79,6 +80,9 @@ export default function DrawerAppBar(props: Props) {
     </Box>
   );
 
+
+  
+  const navigate = useNavigate();
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
@@ -87,7 +91,7 @@ export default function DrawerAppBar(props: Props) {
       <ThemeProvider theme={whiteTheme}>
         <AppBar component="nav">
           <Toolbar>
-            <img src={String(Logo)} alt="logo" />
+            <img src={String(Logo)} alt="logo" onClick={() => navigate("/")} onKeyDown={() => navigate("/")}  />
             <Typography
               variant="h5"
               component="div"
@@ -138,9 +142,9 @@ export default function DrawerAppBar(props: Props) {
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ p: 3 }}>
+      <Box component="main" sx={{ p: 0 }}>
         <Toolbar />
       </Box>
     </Box>
   );
-}
+};

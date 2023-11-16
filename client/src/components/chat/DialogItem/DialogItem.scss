@@ -3,9 +3,10 @@
 .dialogs {
     &__item {
         $item: &;
-        width: 330px;
+        width: 370px;
         display: flex;
-        margin-bottom: 20px;
+        // margin-bottom: 20px;
+         
         &-avatar {
           position: relative;
           flex: 0 0 40px;

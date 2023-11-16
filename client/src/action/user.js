@@ -16,20 +16,6 @@ export const registration = async (email, username, surname, patronymic, passwor
     }
 }
 
-
-/* export const login = (email, password) => async (dispatch) => {
-    try {
-      const response = await axios.post(`http://localhost:5000/api/auth/login`, {
-        email,
-        password
-      });
-      dispatch(setUser(response.data.user));
-      localStorage.setItem('token', response.data.token);
-    } catch (e) {
-      alert(e);
-    }
-  }; */
-
   export const login = (email, password) => async (dispatch) => {
     try {
       const response = await axios.post(`http://localhost:5000/api/auth/login`, {
@@ -44,10 +30,10 @@ export const registration = async (email, username, surname, patronymic, passwor
   };
 
 
-  export const logout = () => (dispatch) => {
+  /* export const logout = () => (dispatch) => {
     AuthService.logout();
   
     dispatch({
       type: LOGOUT,
     });
-  };
+  }; */

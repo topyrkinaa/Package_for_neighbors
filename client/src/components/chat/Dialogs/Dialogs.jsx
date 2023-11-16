@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
 
-import './Dialogs.scss';
 import DialogItem from '../DialogItem/DialogItem';
 
 const Dialogs = ({ items, userId }) => (
