@@ -25,6 +25,7 @@
         "react"
     ],
     "rules": {
-        "react/forbid-prop-types": "off"
+        "react/forbid-prop-types": "off",
+        "react/function-component-definition": "off"
     }
 }
