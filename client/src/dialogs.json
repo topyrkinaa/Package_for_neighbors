@@ -1,4 +1,5 @@
-[
+{
+  "dialogs" : [
   {
     "id": "655637529096569cfb927368",
     "text": "Ipsum in sint proident exercitation. Voluptate ea in deserunt cillum non eu aute ea et. Est laboris dolor enim quis eu ullamco ipsum.",
@@ -91,6 +92,6 @@
         "fullname": "Freda Santos",
         "avatar": null
       } 
-      
   }
 ]
+}

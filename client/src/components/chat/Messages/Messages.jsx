@@ -27,7 +27,6 @@ const Messages = ({ items }) => {
           }
         ]}
       />
-
       <Message
         avatar="https://sun9-65.userapi.com/impg/JOepnh_WDNgsxp0QWm9Wy7rPEdh1bGugcUr1dw/MYj0RwYwJcY.jpg?size=1431x2160&quality=95&sign=0c65fb10c3370b3e5fc8a077a877fc3f&type=album"
         user={{ fullname: "Имя пользователя" }}

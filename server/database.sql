@@ -6,3 +6,9 @@ create Table users (
     patronymic VARCHAR(255),
     password VARCHAR(255)
 );
+
+create Dialogs (
+    _id SERIAL PRIMARY KEY,
+    author ,
+    
+)
