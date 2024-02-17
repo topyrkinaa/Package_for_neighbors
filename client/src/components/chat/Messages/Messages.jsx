@@ -5,7 +5,7 @@ import { Empty } from 'antd';
 import Message from "../message/Message";
 
 const Messages = ({ items }) => {
-    return items ? (
+    return items && items.length > 0 ? (
     <div>
         <Message
         avatar="https://sun7-18.userapi.com/impg/AGGtfJewPxXacmAK9mdKZj_VQfSnxInj4LfS3w/UEmsPHjunok.jpg?size=1439x2160&quality=95&sign=55b85541fb3e59766f7f90ea6f44c03f&type=album"

@@ -26,11 +26,24 @@ const Dialogs = ({ items, userId, onSearch, inputValue }) => (
         {...item} />
 
     )): (
-      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Ничего не" />
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Ничего не найдено" />
     )}
   </div>
 );
 
+Dialogs.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.object),
+  userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onSearch: PropTypes.func,
+  inputValue: PropTypes.string,
+};
+
+Dialogs.defaultProps = {
+  items: [],
+  userId: '',
+  onSearch: () => {},
+  inputValue: '',
+};
 
 export default Dialogs;
 
