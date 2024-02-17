@@ -1,14 +1,16 @@
 import React from 'react';
 import { TeamOutlined, FormOutlined, EllipsisOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
+import { Button  } from 'antd';
 
 
-import Message from './message/Message';
-import Dialogs from './Dialogs/Dialogs';
+import Messages from './Messages/Messages';
+// import Dialogs from './Dialogs/Dialogs';
+import Status from './Status/Status';
+import Dialogs from '../../containers/Dialogs';
+import Chatinput from './Chatinput/Chatinput';
 import "./HomeChat.scss";
 
 
-const { Search } = Input;
 
 function HomeChat() {
   return (
@@ -21,46 +23,42 @@ function HomeChat() {
             <TeamOutlined />
             <span>Список диалогов</span>
           </div>
-          <FormOutlined />
+          <Button type="ghost" shape="circle" icon={<FormOutlined />} />
           </div>
 
-          <div className="chat__sidebar-search">
-          <Search
-            placeholder="Поиск среди контактов"
-          />
-          </div>
+
           <div className="chat__sidebar-dialogs">
           <Dialogs 
       userId={0}
       items={[
         {
-          id: "0fe0dcef7f2489c18ac334aaaca24adf",
-          text: "Excepteur aute laboris enim veniam minim esse voluptate occaecat elit in dolor ut velit. Labore ut officia nisi amet irure. Non ad eu tempor ut.",
-          created_at: new Date("Thu Feb 13 2003 10:51:22 GMT+0400"),
+          id: "655637529096569cfb927368",
+          text: "Ipsum in sint proident exercitation. Voluptate ea in deserunt cillum non eu aute ea et. Est laboris dolor enim quis eu ullamco ipsum.",
+          created_at: new Date("Wed Aug 11 1971 07:28:05 GMT+0400"),
           user: {
-            id: "655637420c9cb1cc37623b3f",
-            fullname: "Francisca Whitfield",
+            id: "655637529096569cfb927368",
+            fullname: "Lillian Horton",
             avatar: null
           }
         },
         {
-          id: "4ad75154a635bc367e531fd3014a800b",
-          text: "Dolore aliqua pariatur veniam cillum in enim proident magna tempor dolore cupidatat. Qui nulla ad Lorem quis. Nulla aliqua duis sit duis laborum culpa in in minim consectetur aute amet veniam reprehenderit.",
-          created_at: new Date("Fri Dec 03 1982 12:27:47 GMT+0400"),
+          id: "655637429096566cfb927368",
+          text: "Ipsum in sint proident exercitation. Voluptate ea in deserunt cillum non eu aute ea et. Est laboris dolor enim quis eu ullamco ipsum.",
+          created_at: new Date("Wed Aug 11 1971 07:28:05 GMT+0400"),
           user: {
-            id: "4ad75154a635bc367e531fd3014a800b",
-            fullname: "Trina Fernandez",
+            id: "655637429096566cfb927368",
+            fullname: "Lillian Horton",
             avatar: null
           }
         },
         {
-          id: "2dd18c7443df26a9a5900fb6e10a3959",
-          text: "Incididunt consectetur laboris mollit sunt eiusmod minim sint sit est excepteur sit. Voluptate id culpa eiusmod fugiat enim eu esse nisi nisi reprehenderit nisi. Proident consectetur sint occaecat anim ipsum consectetur id laboris deserunt pariatur sint ullamco.",
-          created_at: new Date("Fri Feb 03 2006 19:24:07 GMT+0400"),
+          id: "655637429096569cf1927368",
+          text: "Ipsum in sint proident exercitation. Voluptate ea in deserunt cillum non eu aute ea et. Est laboris dolor enim quis eu ullamco ipsum.",
+          created_at: new Date("Wed Aug 11 1971 07:28:05 GMT+0400"),
           user: {
-            id: "65563742a05a4919a20d3410",
-            fullname: "Jeri Santana",
-            avata: null
+            id: "655637429096569cf1927368",
+            fullname: "Lillian Horton",
+            avatar: null
           }
         },
         {
@@ -137,67 +135,28 @@ function HomeChat() {
               <div className="chat__dialog-header-center">
                 <b className="chat__dialog-header-username">Гай Юлий Цезарь</b>
                 <div className="chat__dialog-status">
-                  <span className="status status--online">онлайн</span>
+                  <Status online/>
                 </div>
               </div>
-              <EllipsisOutlined  style={{ fontSize: '22px' }}/>
-
-
+              <Button type="ghost" shape="circle" icon={<EllipsisOutlined  style={{ fontSize: '22px' }}/>} />
+            </div>
+            <div className="chat__dialog-message">
+              <Messages />
             </div>
 
-            <div className="chat__dialog-message">
-            <Message
-        avatar="https://sun7-18.userapi.com/impg/AGGtfJewPxXacmAK9mdKZj_VQfSnxInj4LfS3w/UEmsPHjunok.jpg?size=1439x2160&quality=95&sign=55b85541fb3e59766f7f90ea6f44c03f&type=album"
-        attachments={[
-          {
-            filename: 'image.jpg',
-            url: 'https://source.unsplash.com/100x100/?random=4&nature,water',
-          }
-        ]}
-      /> 
-      <Message
-        avatar="https://sun7-18.userapi.com/impg/AGGtfJewPxXacmAK9mdKZj_VQfSnxInj4LfS3w/UEmsPHjunok.jpg?size=1439x2160&quality=95&sign=55b85541fb3e59766f7f90ea6f44c03f&type=album"
-        user={{ fullname: "Имя пользователя" }}
-        text="Привет!"
-        date="Fri Nov 6 2023 16:04:09"
-        attachments={[
-          {
-            filename: 'image.jpg',
-            url: 'https://source.unsplash.com/100x100/?random=1&nature,water',
-          },
-          {
-            filename: 'image.jpg',
-            url: 'https://source.unsplash.com/100x100/?random=2&nature,water',
-          },
-          {
-            filename: 'image.jpg',
-            url: 'https://source.unsplash.com/100x100/?random=3&nature,water',
-          }
-        ]}
-      />
-
-      <Message
-        avatar="https://sun9-65.userapi.com/impg/JOepnh_WDNgsxp0QWm9Wy7rPEdh1bGugcUr1dw/MYj0RwYwJcY.jpg?size=1431x2160&quality=95&sign=0c65fb10c3370b3e5fc8a077a877fc3f&type=album"
-        user={{ fullname: "Имя пользователя" }}
-        text="Привет! Как день?"
-        date="Fri Nov 6 2023 17:10:09"
-        isMe
-        isReaded
-      />
-
-<Message
-        avatar="https://sun7-18.userapi.com/impg/AGGtfJewPxXacmAK9mdKZj_VQfSnxInj4LfS3w/UEmsPHjunok.jpg?size=1439x2160&quality=95&sign=55b85541fb3e59766f7f90ea6f44c03f&type=album"
-        user={{ fullname: "Имя пользователя" }}
-        date="Fri Nov 6 2023 17:10:09"
-
-        audio="https://samplelib.com/lib/preview/mp3/sample-3s.mp3"
-      />
-              </div> 
-          </div>
-        
+            <div className="chat__dialog-input">
+            <Chatinput />
+            </div>
+        </div>
       </div>
+    </section> 
+      
+  );
+}
 
-      { /*
+export default HomeChat;
+
+ /*
       <Dialogs 
       userId={0}
       items={[
@@ -279,11 +238,5 @@ function HomeChat() {
         date="Fri Nov 6 2023 17:10:09"
         
         audio="https://samplelib.com/lib/preview/mp3/sample-3s.mp3"
-      /> */ }
-
-      </section> 
-  );
-}
-
-export default HomeChat;
+      /> */ 
 

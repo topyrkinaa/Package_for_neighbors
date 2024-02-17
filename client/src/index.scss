@@ -7,3 +7,20 @@ body {
 * {
     outline: none;
 }
+
+.ant-btn-circle {
+    opacity: 0.4;
+    border: 0;
+    box-shadow: none;
+    transition: opacity 0.15 ease-in-out;
+
+    &:after {
+        display: none;
+    }
+    &:hover {
+        opacity: 1;
+    }
+
+}
+
+
