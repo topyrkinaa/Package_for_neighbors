@@ -49,7 +49,12 @@
         align-items: center;
         padding-left: 5px;
         cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
 
+        &:hover {
+          color: #fff; /* Изменяем цвет текста при наведении */
+          background-color: #0546F0; /* Изменяем цвет фона при наведении */
+        }
             .anticon {
                 margin-right: 15px;
                 font-size: 22px;

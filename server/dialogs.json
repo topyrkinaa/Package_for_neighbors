@@ -98,12 +98,18 @@
       
       "messages" : [
         {
+          "id": "3965efb5c6d5baab4d317471c7d6a2e4",
           "avatar": "https://sun7-17.userapi.com/s/v1/if2/acB1VDZXzRA2-6mIlot6J3aysXslykX1ggse74gB7y4E3SeMiLkvRlQnOzjf_VVBquVcthQ-Pw4WZgjxZIkPJUO5.jpg?quality=95&crop=98,304,642,642&as=50x50,100x100,200x200,400x400&ava=1&u=8ps3UYj1NZoqi_opKCXTiLrKgAlCPqe5BtHTYfiBMNI&cs=200x200",
           "text": "Adipisicing mollit consectetur veniam occaecat tempor voluptate laboris pariatur ullamco. Culpa anim nisi culpa occaecat officia et tempor amet elit ipsum aute officia mollit aliqua. Magna sint duis anim dolor aliquip quis et id non laboris et laboris labore.",
           "date": "Mon Oct 20 2008 09:05:44 GMT+0500",
           "user": { "fullname": "Имя пользователя" },
           "isMe": true,
           "isReaded": true
+        },
+        {
+          "dialogs": "3965efb5c6d5baab4d317471c7d6a2e4"
+
+
         }
       ]
 }

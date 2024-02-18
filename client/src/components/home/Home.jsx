@@ -1,11 +1,16 @@
 import React from 'react';
 import { IssuesCloseOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 import "./Home.scss";
-import { Button } from 'antd';
-
 
 function Home() {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/reference");
+  };
+
   return (
     <section className='promo'>
       <div>
@@ -15,8 +20,18 @@ function Home() {
               <h1 className='promo__text-hh'>Зарегистрируйтесь</h1>
               <p className='promo__text-pp'>или войдите для полного доступа</p>
             </div>
-            <div className='promo__info'>
-            <IssuesCloseOutlined />
+            <div
+              className='promo__info'
+              onClick={handleNavigate}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleNavigate();
+                }
+              }}
+              role="button"  
+              tabIndex={0}  
+            >
+              <IssuesCloseOutlined />
               <p className='promo__text-pp'>Справочная информация</p>
             </div>
           </div>
