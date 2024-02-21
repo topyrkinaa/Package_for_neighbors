@@ -17,7 +17,7 @@ const Chatinput = props => {
             size="large" 
             placeholder='Введите текст сообщения...'/>
         <div className="chat-input__actions">
-            <Button type="ghost" shape="circle" icon={<CameraOutlined />} />
+            <Button type="ghost" shape="circle" icon={<CameraOutlined />}  />
             {value ? 
             <Button type="ghost" shape="circle" icon={<SendOutlined />} />
             :  <Button type="ghost" shape="circle" icon={<AudioOutlined />} /> 
