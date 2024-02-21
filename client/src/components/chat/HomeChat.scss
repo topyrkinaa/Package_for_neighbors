@@ -97,10 +97,7 @@
             }
         }
 
-        &-message {
-            padding: 20px;
-            padding-bottom: 0;
-            overflow: auto;
+        &-messages {
             height: calc(100% - 138px);
         }
     }

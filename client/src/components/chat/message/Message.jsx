@@ -13,6 +13,7 @@ import playSvg from "../../../assets/img/play.svg";
 
 import "./Message.scss";
 import IconReaded from '../IconReaded/IconReaded';
+import Avatar from '../Avatar/Avatar';
 
 const MessageAudio = ({audioSrc}) => {
 
@@ -106,7 +107,7 @@ const Message = ({
     <div className='message__content'>
      <IconReaded isMe={isMe} isReaded={isReaded} />
       <div className='message__avatar'>
-        <img src={avatar} alt={`Avatar ${user.fullname}`} />
+        <Avatar user={user} />
       </div>
       <div className="message__info">
       {(audio || text || isTyping) && (
