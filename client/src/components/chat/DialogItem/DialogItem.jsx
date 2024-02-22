@@ -14,11 +14,12 @@ const getMessageTime = created_at => (
       : format(created_at, 'dd.MM.yyyy')
 );
 
-const DialogItem = ({ id, user, unreaded, created_at, text, isMe, onSelect }) => (
+const DialogItem = ({ id, user, unreaded, created_at, text, isMe, onSelect, currentDialogId }) => (
     
     
     <div className={ClassNames('dialogs__item', {
-        'dialogs__item--online': user.isOnline
+        'dialogs__item--online': user.isOnline,
+        'dialogs__item--selected': currentDialogId === id
         })}
         onClick={() => onSelect(id)}
         >
@@ -34,7 +35,7 @@ const DialogItem = ({ id, user, unreaded, created_at, text, isMe, onSelect }) =>
             </div>
             <div className="dialogs__item-info-bottom">
                 <p>
-                    {text}
+                    {text} 
                 </p>
                 { isMe && <IconReaded isMe  /> }
                 {unreaded > 0 && 

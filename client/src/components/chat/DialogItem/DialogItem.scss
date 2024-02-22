@@ -20,6 +20,11 @@
           }
         }
 
+
+        &--selected {
+            background-color: #f3f7ff;
+        }
+        
         &--online {
             #{$item}-avatar {
                 &::before {
@@ -36,6 +41,7 @@
                 }
             }
         }
+
         &-info {
             display: flex;
             flex-direction: column;

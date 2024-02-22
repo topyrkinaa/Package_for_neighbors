@@ -10,7 +10,7 @@ import "./Dialogs.scss";
 const { Search } = Input;
 
 
-const Dialogs = ({ items, userId, onSearch, inputValue, onSelectDialog }) => (
+const Dialogs = ({ items, userId, onSearch, inputValue, onSelectDialog, currentDialogId }) => (
     <div className="dialogs">
       <div className="dialogs__search">
             <Search
@@ -25,6 +25,7 @@ const Dialogs = ({ items, userId, onSearch, inputValue, onSelectDialog }) => (
         key={item.id} 
         isMe={item.user.id === userId} 
         onSelect ={onSelectDialog}
+        currentDialogId={currentDialogId}
         {...item} 
         />
       ))
@@ -39,6 +40,7 @@ Dialogs.propTypes = {
   userId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onSearch: PropTypes.func,
   inputValue: PropTypes.string,
+  сurrentDialogId: PropTypes.any
 };
 
 Dialogs.defaultProps = {

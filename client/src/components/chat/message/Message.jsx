@@ -4,6 +4,7 @@ import ClassNames from 'classnames';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import ruLocale from "date-fns/locale/ru";
 
+
 import { convertCurrentTime } from '../../../utils/helpers';
 
 import waveSvg from "../../../assets/img/wave.svg";
@@ -14,6 +15,8 @@ import playSvg from "../../../assets/img/play.svg";
 import "./Message.scss";
 import IconReaded from '../IconReaded/IconReaded';
 import Avatar from '../Avatar/Avatar';
+
+
 
 const MessageAudio = ({audioSrc}) => {
 
@@ -112,7 +115,8 @@ const Message = ({
       <div className="message__info">
       {(audio || text || isTyping) && (
           <div className="message__bubble">
-            {text && <p className="message__text">{text}</p>}
+            
+            {text && <p className="message__text">{text}</p> }
             {isTyping && ( 
             <div className="message__typing">
                   <span />
