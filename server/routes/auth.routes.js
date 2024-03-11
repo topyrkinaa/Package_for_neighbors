@@ -10,3 +10,23 @@ router.post('/register', (req,res) => {
         res.send({message: "Server error"})
     }
 })
+
+router.post('/dialogs', (req,res) => {
+    try {
+
+        
+    } catch (e) {
+        console.log(e)
+        res.send({message: "Server error"})
+    }
+})
+
+router.post('/messages', (req,res) => {
+    try {
+
+        
+    } catch (e) {
+        console.log(e)
+        res.send({message: "Server error"})
+    }
+})

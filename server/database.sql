@@ -4,12 +4,30 @@ create Table users (
     username VARCHAR(255),
     surname VARCHAR(255),
     patronymic VARCHAR(255),
-    password VARCHAR(255)
+    password VARCHAR(255),
+    last_seen DATE,
+    avatar VARCHAR(255)
 );
 
-create Dialogs (
-    _id SERIAL PRIMARY KEY,
-    author ,
-    
-)
+create Table dialogs (
+    id SERIAL PRIMARY KEY,
+    authorId INT NOT NULL REFERENCES users,
+    partnerId INT NOT NULL REFERENCES users,
+    lastMessageId INT
+);
 
+ALTER TABLE dialogs ADD CONSTRAINT fk_lastMessage FOREIGN KEY (lastMessageId) REFERENCES messages(id)
+
+create Table messages (
+    id SERIAL PRIMARY KEY,
+    authorId INT NOT NULL,
+    title VARCHAR(4096),
+    dialogId INT NOT NULL,
+    unread boolean,
+    created_at text,
+    ALTER TABLE messages ADD CONSTRAINT fk_authorId_MU FOREIGN KEY(authorId) REFERENCES users(id),
+    ALTER TABLE messages ADD CONSTRAINT fk_dialogId_MD FOREIGN KEY(dialogId) REFERENCES dialogs(id)
+);
+
+
+SELECT COUNT(1) FROM information_schema.table_constraints WHERE constraint_name='fk_authorId_MU' AND table_name='messages';
