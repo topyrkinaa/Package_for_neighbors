@@ -2,6 +2,7 @@ const db = require('../db')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const createJWToken = require('../utils/createJWToken')
 
 class UserController {
     async createUser(req, res) {
@@ -12,7 +13,8 @@ class UserController {
           return res.status(400).json({ message: `User with email ${email} already exist` })
         } 
         const hashPassword = await bcrypt.hash(password, 8)
-        const newPerson = await db.query(`INSERT INTO users(email, username, surname, patronymic, password) values ($1, $2, $3, $4, $5) RETURNING *`, [email, username, surname, patronymic, hashPassword]) 
+        const newPerson = await db.query(`INSERT INTO users(email, username, surname, patronymic, password, last_seen) values ($1, $2, $3, $4, $5, $6) RETURNING *`,
+         [email, username, surname, patronymic, hashPassword,  new Date()]) 
         //res.json(newPerson.rows[0])
         res.json({message: "User was created"})
       } catch (error) {
@@ -78,10 +80,10 @@ class UserController {
           return res.status(400).json({ message: "Invalid password" });
         }
     
-        const token = jwt.sign({ id: user.rows[0].id }, config.get("secretKey"), {
-          expiresIn: "1h",
-        });
-    
+        const update = db.query(`UPDATE users SET last_seen = $1 WHERE email = $2`, [new Date(), email]);
+        
+        const token = createJWToken(email);
+
         return res.json({
           token,
           user: {
