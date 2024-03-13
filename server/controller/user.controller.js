@@ -45,6 +45,18 @@ class UserController {
       }
     }
 
+    async getme(req,res) {
+      try {
+        const email = req.user.data
+        const users = await db.query(`SELECT * FROM users WHERE email = '${email}' `)
+        res.json(users.rows[0])
+      } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: 'Internal Server Error', error: error.message })
+      }
+    }
+
+
     async updateUser(req,res) {
       try {
         const { id, email, username, surname, patronymic, password } = req.body
