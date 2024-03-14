@@ -1,6 +1,5 @@
 const express = require('express')
 const dotenv = require('dotenv')
-const socket = require('socket.io')
 const {createServer} = require('http')
 
 const userRouter = require('./routes/user.routes')
@@ -9,13 +8,11 @@ const messageRouter = require('./routes/message.routes')
 const corsMiddlecare = require('./middleware/cors.middleware')
 const authMiddlecare = require('./middleware/checkAuth.middleware')
 
+const createSocket = require('./core/io.socket')
+
 const app = express()
 const http = createServer(app)
-const io = socket(http, {
-    cors: {
-      origin: '*',
-    }
-});
+const io = createSocket(http);
 
 
 dotenv.config()
@@ -26,18 +23,12 @@ app.use(express.json())
 
 const start =  async () => {
     try {
-        app.use(express.json())
-        app.use('/api/auth', userRouter)
-        app.use('/api/chat', dialogRouter)
-        app.use('/api/chat', messageRouter)
+        app.use('/api/auth', userRouter(io))
+        app.use('/api/chat', dialogRouter(io))
+        app.use('/api/chat', messageRouter(io))
 
         io.on('connection', function(socket) {
             console.log('CONNECTED!');
-            socket.emit('111', 'QWEQWEQWEQWEQWEQWE')
-
-            socket.on('222', function(msg) {
-                console.log('CLIENT SAY:' + msg);
-            });
 
         });
 

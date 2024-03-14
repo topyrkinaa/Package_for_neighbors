@@ -1,11 +1,17 @@
 const Router = require('express')
 const router = new Router()
-
-const dialogController = require('../controller/dialog.controller')
-
-router.get('/dialogs/:id', dialogController.index)
-router.post('/dialogs', dialogController.create)
-router.delete('/dialogs/:id', dialogController.deleteDialog);
+const DialogController = require('../controller/dialog.controller')
 
 
-module.exports = router
+const dialogRouter = (io) => {
+    const DialogCtr = new DialogController(io);
+    
+    router.get('/dialogs/:id', DialogCtr.index)
+    router.post('/dialogs', DialogCtr.create)
+    router.delete('/dialogs/:id', DialogCtr.deleteDialog);
+
+    return router;
+}
+
+
+module.exports = dialogRouter;

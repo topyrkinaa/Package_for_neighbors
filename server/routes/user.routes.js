@@ -1,15 +1,20 @@
 const Router = require('express')
 const router = new Router()
+const UserController = require('../controller/user.controller.js'); 
 
 
-const userController = require('../controller/user.controller.js')
 
-router.post('/register', userController.createUser)
-router.get('/register', userController.getUsers)
-router.get('/register/:id', userController.getOneUser)
-router.get('/me', userController.getme)
-router.put('/register', userController.updateUser)
-router.delete('/register/:id', userController.deleteUser)
-router.post('/login', userController.loginUser)
+const userRouter = (io) => {
+    const UserCtr = new UserController(io); 
+    
+    router.post('/register', UserCtr.createUser)
+    router.get('/register', UserCtr.getUsers)
+    router.get('/register/:id', UserCtr.getOneUser)
+    router.get('/me', UserCtr.getme)
+    router.put('/register', UserCtr.updateUser)
+    router.delete('/register/:id', UserCtr.deleteUser)
+    router.post('/login', UserCtr.loginUser)
+    return router;
+}
 
-module.exports = router
+module.exports = userRouter;

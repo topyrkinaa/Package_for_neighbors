@@ -1,11 +1,14 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 const createJWToken = require('../utils/createJWToken')
 
 class UserController {
-    async createUser(req, res) {
+  io;
+
+  constructor(io) {
+    this.io = io;
+  }
+    createUser = async (req, res) => {
       try {
         const { email, username, surname, patronymic, password } = req.body
         const candidate = await db.query(`SELECT EXISTS (SELECT 1 FROM users WHERE email = '${email}') AS it_does_exist; `)
@@ -24,7 +27,7 @@ class UserController {
       }
     }
 
-    async getUsers(req,res) {
+    getUsers = async (req,res) => {
       try {
       const users = await db.query(`SELECT * FROM users`)
       res.json(users.rows)
@@ -34,7 +37,7 @@ class UserController {
       }
     }
 
-    async getOneUser(req,res) {
+    getOneUser = async (req,res)=> {
       try {
         const id = req.params.id
         const users = await db.query(`SELECT * FROM users WHERE id = '${id}' `)
@@ -45,7 +48,7 @@ class UserController {
       }
     }
 
-    async getme(req,res) {
+    getme = async(req,res) => {
       try {
         const email = req.user.data
         const users = await db.query(`SELECT * FROM users WHERE email = '${email}' `)
@@ -57,7 +60,7 @@ class UserController {
     }
 
 
-    async updateUser(req,res) {
+    updateUser = async (req,res) => {
       try {
         const { id, email, username, surname, patronymic, password } = req.body
         const users = await db.query(`UPDATE users set email = '${email}', username = '${username}', surname = '${surname}', patronymic = '${patronymic}', password = '${password}' where id = '${id}' RETURNING * `)
@@ -68,7 +71,7 @@ class UserController {
       }
     }
 
-    async deleteUser (req,res) {
+    deleteUser = async (req,res) => {
       try {
         const id = req.params.id
         const user = await db.query(`DELETE FROM users where id = '${id}' `)
@@ -79,7 +82,7 @@ class UserController {
       }
     }
 
-    async loginUser(req, res) {
+    loginUser = async (req, res) => {
       try {
         const { email, password } = req.body;
         const user = await db.query(`SELECT * FROM users WHERE email = $1`, [email]);
@@ -112,5 +115,5 @@ class UserController {
     }
   }
   
-  module.exports = new UserController();
+  module.exports = UserController;
   

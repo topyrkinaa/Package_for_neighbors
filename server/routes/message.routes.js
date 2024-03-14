@@ -1,10 +1,17 @@
-const Router = require('express')
-const router = new Router()
+const Router = require('express');
+const router = new Router();
+const MessageController = require('../controller/message.controller');
+const io = require('../index');
 
-const messageController = require('../controller/message.controller')
+const messageRouter = (io) => {
+    
+    const MessageCtr = new MessageController(io);
 
-router.get('/messages', messageController.index)
-router.post('/messages', messageController.create)
-router.delete('/messages/:id', messageController.delete);
+    router.get('/messages', MessageCtr.index);
+    router.post('/messages', MessageCtr.create);
+    router.delete('/messages/:id', MessageCtr.delete);
 
-module.exports = router
+    return router;
+};
+
+module.exports = messageRouter;

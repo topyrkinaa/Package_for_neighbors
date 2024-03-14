@@ -1,9 +1,10 @@
 const db = require('../db')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 
 class DialogController {
+    io;
+    constructor(io) {
+    this.io = io;
+  }
 
     /*
     вот тут я получаю только данные о диалоге, это может быть нужно
@@ -58,7 +59,7 @@ class DialogController {
 
  
 
-    async create (req, res) {
+    create = async (req, res) =>{
         try {
             const { authorid, partnerid, title  } = req.body;
     
@@ -75,7 +76,7 @@ class DialogController {
             const newDialog = await db.query(
                 `INSERT INTO dialogs(authorId, partnerId) VALUES ('${authorid}', '${partnerid}') RETURNING *`
             );
-
+                
             // Вставляем новое сообщение в таблицу messages для установки lastMessage
             const newMessage = await db.query(
             'INSERT INTO messages (title, dialogid, authorid, unread, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
@@ -99,7 +100,7 @@ class DialogController {
     };
 
 
-    async deleteDialog (req, res) {
+    deleteDialog = async (req, res) => {
         try {
             const id = req.params.id;
     
@@ -126,4 +127,4 @@ class DialogController {
     
 }
 
-module.exports = new DialogController();
+module.exports = DialogController;

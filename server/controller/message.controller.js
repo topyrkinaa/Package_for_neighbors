@@ -1,11 +1,12 @@
 const db = require('../db')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 
 class MessageController {
-
-    async index(req, res) {
+    constructor(io) {
+        this.io = io;
+    }
+    io;
+ 
+    index = async(req, res)=> {
         try {
             const dialogId = req.query.dialog;
     
@@ -27,7 +28,7 @@ class MessageController {
         }
     };
 
-    async create(req, res) {
+    create = async (req, res) => {
         try {
             const { title, dialogid, authorid } = req.body;
     
@@ -37,7 +38,20 @@ class MessageController {
                 [title, dialogid, authorid, false, new Date()]
             );
     
-            res.json(newMessage);
+            // Получаем данные о диалоге
+            const dialog = await db.query('SELECT * FROM dialogs WHERE id = $1', [dialogid]);
+    
+            // Отправляем сообщение через сокет
+            this.io.emit('SERVER:NEW_MESSAGE', {
+                dialog: dialog.rows[0],
+                newMessage: newMessage.rows[0]
+            });
+    
+            // Отправляем ответ клиенту с данными о сообщении и диалоге
+            res.json({
+                dialog: dialog.rows[0],
+                newMessage: newMessage.rows[0]
+            });
         } catch (error) {
             console.error('Error creating message:', error);
             res.status(500).json({
@@ -46,7 +60,7 @@ class MessageController {
         }
     };
 
-    async delete(req, res) {
+    delete = async(req, res) => {
     try {
         const messageId = req.params.id;
 
@@ -77,4 +91,4 @@ class MessageController {
 
 }
 
-module.exports = new MessageController();
+module.exports = MessageController;
