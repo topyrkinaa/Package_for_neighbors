@@ -7,40 +7,50 @@ import isToday from 'date-fns/isToday';
 import IconReaded from '../IconReaded/IconReaded';
 import './DialogItem.scss';
 import Avatar from '../Avatar/Avatar';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 
-const getMessageTime = created_at => (
-    isToday(created_at)
-      ? format(created_at, 'HH:mm')
-      : format(created_at, 'dd.MM.yyyy')
-);
+const getMessageTime = created_at => {
+  // Преобразуем строку в объект даты
+  const dateObject = new Date(created_at);
 
-const DialogItem = ({ id, user, unreaded, created_at, text, isMe, onSelect, currentDialogId }) => (
+  // Проверяем, сегодня ли дата создания сообщения
+  return isToday(dateObject)
+      ? format(dateObject, 'HH:mm')
+      : format(dateObject, 'dd.MM.yyyy');
+};
+
+
+const isOnline = last_seen => (
+  differenceInMinutes(new Data().toIsoString(), last_seen) < 5
+)
+
+const DialogItem = ({ id, isMe, onSelect, currentDialogId, partner, lastMessage }) => (
     
     
     <div className={ClassNames('dialogs__item', {
-        'dialogs__item--online': user.isOnline,
+        'dialogs__item--online': true,
         'dialogs__item--selected': currentDialogId === id
         })}
         onClick={() => onSelect(id)}
         >
         <div className='dialogs__item-avatar'>
-            <Avatar user={user} />
+            <Avatar user={partner} />
         </div>
         <div className="dialogs__item-info">
             <div className="dialogs__item-info-top">
-                <b>{user.fullname}</b>
+                <b>{partner.surname} {partner.username}</b>
                 <span>
-                {getMessageTime(created_at)}
+                {getMessageTime(lastMessage.created_at)}
                 </span>
             </div>
             <div className="dialogs__item-info-bottom">
                 <p>
-                    {text} 
+                    {lastMessage.title} 
                 </p>
                 { isMe && <IconReaded isMe  /> }
-                {unreaded > 0 && 
+                { lastMessage.unread > 0 && 
                   <div className="dialogs__item-info-bottom-count">
-                    {unreaded > 9 ? "+9": unreaded}
+                    {lastMessage.unread > 9 ? "+9": lastMessage.unread}
                    </div>
                 }
                 

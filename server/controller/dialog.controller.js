@@ -42,23 +42,22 @@ class DialogController {
                 });
             }
     
-            // Преобразуем результат в массив, если он не является массивом
-            const dialogsArray = Array.isArray(dialogs) ? dialogs : [dialogs];
-    
-            // Для каждого диалога получаем полные данные о пользователях
-            /*const dialogsWithUsers = await Promise.all(dialogsArray.map(async (dialog) => {
-                const author = await db.query('SELECT * FROM users WHERE id = $1', [dialog.authorId]);
-                const partner = await db.query('SELECT * FROM users WHERE id = $1', [dialog.partnerId]);
-                return { ...dialog, author, partner };
-            })); */
             
     
-            return res.json({
-                user: {
-                    id: user.rows[0].id,
-                },
-                dialogs: dialogsArray[0].rows
-            });
+            // Для каждого диалога получаем полные данные о пользователях
+            const dialogsWithUsers = await Promise.all(dialogs.rows.map(async (dialog) => {
+                const author = await db.query('SELECT * FROM users WHERE id = $1', [dialog.authorid]);
+                const partner = await db.query('SELECT * FROM users WHERE id = $1', [dialog.partnerid]);
+                const lastMessage = await db.query('SELECT * FROM messages WHERE id = $1', [dialog.lastmessageid]);
+                return {
+                    id: dialog.id,
+                    author: author.rows[0],
+                    partner: partner.rows[0],
+                    lastMessage: lastMessage.rows[0],
+                };
+            })); 
+    
+            return res.json(dialogsWithUsers);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal Server Error', error: error.message });

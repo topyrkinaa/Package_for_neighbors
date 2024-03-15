@@ -38,7 +38,9 @@ class MessageController {
                 'INSERT INTO messages (title, dialogId, authorid, unread, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
                 [title, dialogid, user.rows[0].id, false, new Date()]
             );
-    
+
+            await db.query('UPDATE dialogs SET lastmessageid = $1 WHERE id =$2' , [newMessage.rows[0].id, dialogid] )
+
             const dialog = await db.query('SELECT * FROM dialogs WHERE id = $1', [dialogid]);
     
             this.io.emit('SERVER:NEW_MESSAGE', {

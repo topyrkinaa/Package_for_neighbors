@@ -21,9 +21,9 @@ const Dialogs = ({ items, userId, onSearch, inputValue, onSelectDialog, currentD
           </div>
           {items.length ? (
       orderBy(items, ["created_at"], ["desc"]).map(item => (
-        <DialogItem 
+        <DialogItem  
         key={item.id} 
-        isMe={item.user.id === userId} 
+        isMe={item.author.id === userId} 
         onSelect ={onSelectDialog}
         currentDialogId={currentDialogId}
         {...item} 

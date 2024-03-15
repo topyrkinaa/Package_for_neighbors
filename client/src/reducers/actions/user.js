@@ -33,7 +33,27 @@ const Actions = {
           }
           return data;
         });
-      }
+      }, 
+      fetchUserRegister: postData => dispatch => {
+        return userAPI.register(postData).then(({data}) => {
+          const { status } = data;
+
+          if (status === 'error') {
+            openNotification({
+              title: 'Ошибка при регистрации',
+              type: 'error',
+            });
+          } else {
+            openNotification({
+              title: 'Отлично!',
+              text: 'Регистрация прошла успешна!',
+              type: 'success',
+            });
+          }
+          
+          return data;
+        });
+      }, 
 };
 
 export default Actions;

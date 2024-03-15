@@ -29,7 +29,7 @@ const StyledSpan = styled.span`
   font: 'Montserrat';
 `;
 
-function Login(props: any) {
+function Login() {
   const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
   const navigate = useNavigate();
 

@@ -7,6 +7,7 @@ const dialogRouter = require('./routes/dialog.routes')
 const messageRouter = require('./routes/message.routes')
 const corsMiddlecare = require('./middleware/cors.middleware')
 const authMiddlecare = require('./middleware/checkAuth.middleware')
+//const updateLastSeen = require('./middleware/updateLastSeen.middleware')
 
 const createSocket = require('./core/io.socket')
 
@@ -18,6 +19,7 @@ const io = createSocket(http);
 dotenv.config()
 app.use(corsMiddlecare)
 app.use(authMiddlecare)
+//app.use(updateLastSeen)
 app.use(express.json())       
 
 

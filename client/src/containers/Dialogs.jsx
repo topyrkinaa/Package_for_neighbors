@@ -31,14 +31,14 @@ const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, use
         setValue(value);
     };
 
-    /*useEffect(() => {
+    useEffect(() => {
         if (!items.length) {
             fetchDialogs();
         } else {
              // Преобразуйте строки в даты перед установкой в состояние
              setFilteredItems(parseDates(JSON.stringify(items)));
         }
-    }, [items]);*/
+    }, [items]);
 
     return (
         <BaseDialogs 

@@ -11,13 +11,13 @@ const Avatar = ({ user }) => {
       <img
         className="avatar"
         src={user.avatar}
-        alt={`Avatar ${user.fullname}`}
+        alt={`Avatar ${user.username}`}
       />
     );
   }
-
-  const { color, colorLighten } = generateAvatarFromHash(user.id);
-  const firstChar = user.fullname[0].toUpperCase();
+// TODO: доработать id
+  const { color, colorLighten } = generateAvatarFromHash('655637429096566cfb927368');
+  const firstChar = user.username[0].toUpperCase();
   
   return (
     <div
@@ -34,7 +34,7 @@ const Avatar = ({ user }) => {
 Avatar.defaultProps = {
   user: {
     avatar: '',
-    fullname: '',
+    username: '',
     id: ''
   }
 };

@@ -5,10 +5,17 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ThunkDispatch } from 'redux-thunk';
+import { useDispatch } from "react-redux";
+import { AnyAction } from 'redux';
 import zodNameValidation from './validation.message';
 import MessagesRegister from './register.messages';
+
 import Colors from '../../../utils/colors';
 // import { registration } from '../../../action/user_1';
+
+import Actions from '../../../reducers/actions/user';
+
 
 const fieldSchema = {
   username: zodNameValidation('Имя'),
@@ -32,6 +39,9 @@ const StyledSpan = styled.span`
 `;
 
 function Register() {
+
+  const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -45,6 +55,7 @@ function Register() {
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
+    dispatch(Actions.fetchUserRegister(data))
     // registration(data.email, data.username, data.surname, data.patronymic, data.password);
     // reset();
   }

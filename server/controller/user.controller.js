@@ -8,6 +8,7 @@ class UserController {
   constructor(io) {
     this.io = io;
   }
+
     createUser = async (req, res) => {
       try {
         const { email, username, surname, patronymic, password } = req.body
@@ -19,7 +20,8 @@ class UserController {
         const newPerson = await db.query(`INSERT INTO users(email, username, surname, patronymic, password, last_seen) values ($1, $2, $3, $4, $5, $6) RETURNING *`,
          [email, username, surname, patronymic, hashPassword,  new Date()]) 
         //res.json(newPerson.rows[0])
-        res.json({message: "Пользователь создан"})
+        const status = "success"
+        return res.json({ status });
       } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Internal Server Error', error: error.message })
