@@ -1,6 +1,6 @@
-import dialogsAPI from '../../core/axios';
+import dialogsAPI from '../../core/dialogs';
 
-const actions = {
+const Actions = {
     setDialogs: items => ({
         type: 'DIALOGS:SET_ITEMS',
         payload: items,
@@ -11,9 +11,9 @@ const actions = {
       }),
     fetchDialogs: () => dispatch => {
         dialogsAPI.getAll().then(({ data }) => {
-            dispatch(actions.setDialogs(data))
+            dispatch(Actions.setDialogs(data))
         });
     }
 };
 
-export default actions;
+export default Actions;

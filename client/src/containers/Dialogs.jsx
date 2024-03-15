@@ -6,7 +6,7 @@ import dialogsActions from '../reducers/actions/dialogs'
 import BaseDialogs from '../components/chat/Dialogs/Dialogs';
 
 
-axios.defaults.baseURL = 'http://localhost:9999';
+//axios.defaults.baseURL = 'http://localhost:9999';
 
 // Функция для преобразования строковых дат в объекты Date
 const parseDates = (data) => {
@@ -31,14 +31,14 @@ const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, use
         setValue(value);
     };
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (!items.length) {
             fetchDialogs();
         } else {
              // Преобразуйте строки в даты перед установкой в состояние
              setFilteredItems(parseDates(JSON.stringify(items)));
         }
-    }, [items]);
+    }, [items]);*/
 
     return (
         <BaseDialogs 

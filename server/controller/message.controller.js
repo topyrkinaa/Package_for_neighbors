@@ -30,24 +30,22 @@ class MessageController {
 
     create = async (req, res) => {
         try {
-            const { title, dialogid, authorid } = req.body;
-    
-            // Вставляем новое сообщение в таблицу messages с дополнительными значениями по умолчанию
+            const { title, dialogid } = req.body;
+            const email = req.user.data // получаем email по токену
+            const user = await db.query(`SELECT * FROM users WHERE email = '${email}' `)
+
             const newMessage = await db.query(
                 'INSERT INTO messages (title, dialogId, authorid, unread, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-                [title, dialogid, authorid, false, new Date()]
+                [title, dialogid, user.rows[0].id, false, new Date()]
             );
     
-            // Получаем данные о диалоге
             const dialog = await db.query('SELECT * FROM dialogs WHERE id = $1', [dialogid]);
     
-            // Отправляем сообщение через сокет
             this.io.emit('SERVER:NEW_MESSAGE', {
                 dialog: dialog.rows[0],
                 newMessage: newMessage.rows[0]
             });
     
-            // Отправляем ответ клиенту с данными о сообщении и диалоге
             res.json({
                 dialog: dialog.rows[0],
                 newMessage: newMessage.rows[0]

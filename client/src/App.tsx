@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './App.scss';
 import Home from './components/home/Home';
 import PrivateRoute from './utils/router/privateRoute';
@@ -12,25 +13,29 @@ import Reference from './components/reference/Reference';
 
 
 
-function App() {
-  return (
-    <div className="App">
-      <Navbar/>
-      <Routes>
-        <Route element={<PrivateRoute />}>
-          <Route path="/chat" element={<HomeChat />} />
-        </Route>
-        <Route path="/" element={<Home />} />
-        <Route path="/reference" element={<Reference />} />
+const App = (props: any) => {
+  const { isAuth } = props;
 
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="recovery" element={<Recovery />} />
-        
-      </Routes>
-   </div>
+    return (
+      <div className="App">
+        <Navbar/>
+        <Routes>
+          
+          <Route
+          path="/chat"
+          element={isAuth ? <HomeChat/> : <Navigate to="/login" replace/>}
+          />
 
-  );
+          <Route path="/" element={<Home />} />
+          <Route path="/reference" element={<Reference />} />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="recovery" element={<Recovery />} />
+          
+        </Routes>
+     </div>
+  
+    );
 }
 
-export default App;
+export default connect(({ user }) => ({ isAuth: user.isAuth}))(App);

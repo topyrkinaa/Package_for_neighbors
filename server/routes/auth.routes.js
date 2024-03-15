@@ -3,8 +3,6 @@ const router = new Router()
 
 router.post('/register', (req,res) => {
     try {
-
-        
     } catch (e) {
         console.log(e)
         res.send({message: "Server error"})
@@ -12,9 +10,7 @@ router.post('/register', (req,res) => {
 })
 
 router.post('/dialogs', (req,res) => {
-    try {
-
-        
+    try { 
     } catch (e) {
         console.log(e)
         res.send({message: "Server error"})
@@ -22,9 +18,7 @@ router.post('/dialogs', (req,res) => {
 })
 
 router.post('/messages', (req,res) => {
-    try {
-
-        
+    try {   
     } catch (e) {
         console.log(e)
         res.send({message: "Server error"})

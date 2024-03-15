@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import zodNameValidation from './validation.message';
 import MessagesRegister from './register.messages';
 import Colors from '../../../utils/colors';
-import { registration } from '../../../action/user';
+// import { registration } from '../../../action/user_1';
 
 const fieldSchema = {
   username: zodNameValidation('Имя'),
@@ -45,7 +45,7 @@ function Register() {
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
-    registration(data.email, data.username, data.surname, data.patronymic, data.password);
+    // registration(data.email, data.username, data.surname, data.patronymic, data.password);
     // reset();
   }
 

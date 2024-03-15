@@ -19,7 +19,7 @@ class UserController {
         const newPerson = await db.query(`INSERT INTO users(email, username, surname, patronymic, password, last_seen) values ($1, $2, $3, $4, $5, $6) RETURNING *`,
          [email, username, surname, patronymic, hashPassword,  new Date()]) 
         //res.json(newPerson.rows[0])
-        res.json({message: "User was created"})
+        res.json({message: "Пользователь создан"})
       } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Internal Server Error', error: error.message })
@@ -87,26 +87,20 @@ class UserController {
         const { email, password } = req.body;
         const user = await db.query(`SELECT * FROM users WHERE email = $1`, [email]);
         if (user.rows.length === 0) {
-          return res.status(404).json({ message: "User not found" });
+          return res.json({ status: "error" });
         }
     
         const isPassValid = bcrypt.compareSync(password, user.rows[0].password);
         if (!isPassValid) {
-          return res.status(400).json({ message: "Invalid password" });
+          return res.json({ status: "error" });
         }
     
         const update = db.query(`UPDATE users SET last_seen = $1 WHERE email = $2`, [new Date(), email]);
-        
+        const status = "success"
         const token = createJWToken(email);
 
         return res.json({
-          token,
-          user: {
-            id: user.rows[0].id,
-            username: user.rows[0].username,
-            surname: user.rows[0].surname,
-            patronymic: user.rows[0].patronymic,
-          },
+          token, status
         });
       } catch (error) {
         console.error(error);

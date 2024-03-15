@@ -1,13 +1,14 @@
 import { combineReducers } from "redux";
 
-import auth from "./auth";
+const reducers = ['messages','dialogs', 'user'];
+
+import user from "./user";
 import message from "./message";
 import dialogs from "./dialogs";
 import messages from './messages';
 
 export default combineReducers({
-  auth,
-  message,
+  user,
   dialogs,
   messages
 });

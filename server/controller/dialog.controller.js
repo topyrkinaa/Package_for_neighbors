@@ -31,8 +31,10 @@ class DialogController {
 
     async index(req, res) {
         try {
-            const authorID = req.params.id;
-            const dialogs = await db.query('SELECT * FROM dialogs WHERE authorId = $1', [authorID]);
+            const emailID = req.user.data
+            const user = await db.query(`SELECT * FROM users WHERE email = '${emailID}' `);
+            
+            const dialogs = await db.query('SELECT * FROM dialogs WHERE authorId = $1', [user.rows[0].id]);
     
             if (dialogs.length === 0) {
                 return res.status(404).json({
@@ -44,13 +46,19 @@ class DialogController {
             const dialogsArray = Array.isArray(dialogs) ? dialogs : [dialogs];
     
             // Для каждого диалога получаем полные данные о пользователях
-            const dialogsWithUsers = await Promise.all(dialogsArray.map(async (dialog) => {
+            /*const dialogsWithUsers = await Promise.all(dialogsArray.map(async (dialog) => {
                 const author = await db.query('SELECT * FROM users WHERE id = $1', [dialog.authorId]);
                 const partner = await db.query('SELECT * FROM users WHERE id = $1', [dialog.partnerId]);
                 return { ...dialog, author, partner };
-            }));
+            })); */
+            
     
-            return res.json(dialogsWithUsers);
+            return res.json({
+                user: {
+                    id: user.rows[0].id,
+                },
+                dialogs: dialogsArray[0].rows
+            });
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal Server Error', error: error.message });
@@ -61,11 +69,13 @@ class DialogController {
 
     create = async (req, res) =>{
         try {
-            const { authorid, partnerid, title  } = req.body;
-    
+
+            const { partnerid, title  } = req.body;
+            const emailID = req.user.data;
+            const user = await db.query(`SELECT * FROM users WHERE email = '${emailID}' `);
             // Проверяем, существует ли уже диалог между автором и партнером
             const existingDialog = await db.query(
-                `SELECT EXISTS (SELECT 1 FROM dialogs WHERE (authorId = '${authorid}' AND partnerId = '${partnerid}') OR (authorId = '${partnerid}' AND partnerId = '${authorid}')) AS it_does_exist; `)
+                `SELECT EXISTS (SELECT 1 FROM dialogs WHERE (authorId = '${user.rows[0].id}' AND partnerId = '${partnerid}') OR (authorId = '${partnerid}' AND partnerId = '${user.rows[0].id}')) AS it_does_exist; `)
             ;
     
             if (existingDialog.rows[0].it_does_exist) {
@@ -74,13 +84,13 @@ class DialogController {
     
             // Вставляем новый диалог в таблицу dialogs
             const newDialog = await db.query(
-                `INSERT INTO dialogs(authorId, partnerId) VALUES ('${authorid}', '${partnerid}') RETURNING *`
+                `INSERT INTO dialogs(authorId, partnerId) VALUES ('${user.rows[0].id}', '${partnerid}') RETURNING *`
             );
                 
             // Вставляем новое сообщение в таблицу messages для установки lastMessage
             const newMessage = await db.query(
             'INSERT INTO messages (title, dialogid, authorid, unread, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [title, newDialog.rows[0].id, authorid, false, new Date()]
+            [title, newDialog.rows[0].id, user.rows[0].id, false, new Date()]
         );
 
         // Обновляем lastMessage в созданном диалоге

@@ -11,8 +11,8 @@ import { AnyAction } from 'redux';
 
 import MessagesRegister from '../register/register.messages';
 import Colors from '../../../utils/colors';
-import {login} from '../../../action/user';
 
+import Actions from '../../../reducers/actions/user';
 
 const fieldSchema = {
   email: z.string().email({ message: MessagesRegister.errors.email }),
@@ -29,9 +29,10 @@ const StyledSpan = styled.span`
   font: 'Montserrat';
 `;
 
-function Login() {
+function Login(props: any) {
   const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
   const navigate = useNavigate();
+
 
   const {
     register,
@@ -46,10 +47,12 @@ function Login() {
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
-    dispatch(login(data.email, data.password))
-    .then(() => {
-      navigate("/chat");
-      window.location.reload();
+    dispatch(Actions.fetchUserLogin(data)).then(({ status }) => {
+      if (status === 'success') {
+        setTimeout(() => {
+          navigate("/chat");
+        }, 1000)
+      }
     })
   };
 
