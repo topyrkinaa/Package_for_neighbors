@@ -1,4 +1,3 @@
-import { registration } from '../action/user_1';
 import axios from '../utils/api/axios';
 
 

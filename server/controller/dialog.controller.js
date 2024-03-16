@@ -1,10 +1,10 @@
 const db = require('../db')
 
 class DialogController {
-    io;
     constructor(io) {
-    this.io = io;
-  }
+        this.io = io;
+    }
+    io;
 
     /*
     вот тут я получаю только данные о диалоге, это может быть нужно
@@ -34,7 +34,7 @@ class DialogController {
             const emailID = req.user.data
             const user = await db.query(`SELECT * FROM users WHERE email = '${emailID}' `);
             
-            const dialogs = await db.query('SELECT * FROM dialogs WHERE authorId = $1', [user.rows[0].id]);
+            const dialogs = await db.query('SELECT * FROM dialogs WHERE authorId = $1 OR partnerId = $1', [user.rows[0].id]);
     
             if (dialogs.length === 0) {
                 return res.status(404).json({
@@ -89,16 +89,46 @@ class DialogController {
             // Вставляем новое сообщение в таблицу messages для установки lastMessage
             const newMessage = await db.query(
             'INSERT INTO messages (title, dialogid, authorid, unread, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [title, newDialog.rows[0].id, user.rows[0].id, false, new Date()]
-        );
+            [title, newDialog.rows[0].id, user.rows[0].id, false, new Date()] 
+            );
 
-        // Обновляем lastMessage в созданном диалоге
-        await db.query(
-            'UPDATE dialogs SET lastMessageId = $1 WHERE id = $2',
-            [newMessage.rows[0].id, newDialog.rows[0].id]
-        );
+            // Обновляем lastMessage в созданном диалоге
+            await db.query(
+                'UPDATE dialogs SET lastMessageId = $1 WHERE id = $2',
+                [newMessage.rows[0].id, newDialog.rows[0].id]
+            );
 
-        res.json(newDialog);
+
+            this.io.emit('SERVER:DIALOG_CREATED', {
+                partner: partnerid,
+                dialog: {
+                id: newDialog.rows[0].id,
+                authorid: newDialog.rows[0].authorid,
+                partnerid: newDialog.rows[0].partnerid,
+                lastMessage: {
+                    id: newMessage.rows[0].id,
+                    authorid: user.rows[0].id,
+                    text: newMessage.rows[0].title,
+                    unread: false,
+                    created_at: newMessage.rows[0].created_at
+                }
+                }
+            });
+
+            res.json({
+                partner: partnerid,
+                dialog: {
+                id: newDialog.rows[0].id,
+                authorid: newDialog.rows[0].authorid,
+                partnerid: newDialog.rows[0].partnerid,
+                lastmessageid: {
+                    id: newMessage.rows[0].id,
+                    authorid: user.rows[0].id,
+                    unread: false,
+                    created_at: newMessage.rows[0].created_at
+                }
+                }
+            });
 
         } catch (error) {
             console.error('Error creating dialog:', error);

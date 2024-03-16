@@ -18,8 +18,21 @@ class MessageController {
                     message: 'Messages not found'
                 });
             }
-    
-            res.json(messages);
+            
+            const messagesWithUsers = await Promise.all(messages.rows.map(async (message) => {
+                const user = await db.query('SELECT * FROM users WHERE id = $1', [message.authorid]);
+                const dialog = await db.query('SELECT * FROM dialogs WHERE id = $1', [message.dialogid]);
+                return {
+                    id: message.id,
+                    user: user.rows[0],
+                    dialog: dialog.rows[0],
+                    text: message.title,
+                    unread: message.unread,
+                    created_at: message.created_at
+                };
+            })); 
+
+            return res.json(messagesWithUsers);
         } catch (error) {
             console.error('Error fetching messages:', error);
             res.status(500).json({
@@ -44,13 +57,22 @@ class MessageController {
             const dialog = await db.query('SELECT * FROM dialogs WHERE id = $1', [dialogid]);
     
             this.io.emit('SERVER:NEW_MESSAGE', {
+                
+                id: newMessage.rows[0].id,
+                unread: newMessage.rows[0].unread,
+                text: newMessage.rows[0].title,
                 dialog: dialog.rows[0],
-                newMessage: newMessage.rows[0]
+                user: user.rows[0],
+                created_at:  newMessage.rows[0].created_at,
             });
     
             res.json({
+                id: newMessage.rows[0].id,
+                unread: newMessage.rows[0].unread,
+                text: newMessage.rows[0].title,
                 dialog: dialog.rows[0],
-                newMessage: newMessage.rows[0]
+                user: user.rows[0],
+                created_at:  newMessage.rows[0].created_at,
             });
         } catch (error) {
             console.error('Error creating message:', error);

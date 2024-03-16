@@ -38,6 +38,7 @@ export const registration = async (email, username, surname, patronymic, passwor
           type: 'success',
         });
       }
+      
 
       // alert(response.data.message);
       // dispatch(setUser(response.data.user));

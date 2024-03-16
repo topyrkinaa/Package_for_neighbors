@@ -10,7 +10,14 @@ import "./Dialogs.scss";
 const { Search } = Input;
 
 
-const Dialogs = ({ items, userId, onSearch, inputValue, onSelectDialog, currentDialogId }) => (
+const Dialogs = ({ 
+  items, 
+  userId, 
+  onSearch, 
+  inputValue, 
+  onSelectDialog, 
+  currentDialogId 
+}) => (
     <div className="dialogs">
       <div className="dialogs__search">
             <Search

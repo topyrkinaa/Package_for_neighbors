@@ -1,6 +1,6 @@
 const initialState = {
     items: [],
-    currentDialogId: null,
+    currentDialogId: window.location.pathname.split('chat/')[1],
     isLoading: false,
 }
 

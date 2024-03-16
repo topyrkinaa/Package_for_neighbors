@@ -10,6 +10,7 @@ export default (state = initialState, {type, payload}) => {
             return {
               ...state,
               data: payload,
+              
               isAuth: true,
               token: window.localStorage.token
             };

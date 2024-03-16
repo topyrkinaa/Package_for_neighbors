@@ -89,7 +89,6 @@ const MessageAudio = ({audioSrc}) => {
 };
 
 const Message = ({ 
-  avatar, 
   user, 
   text, 
   date, 

@@ -3,7 +3,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.scss';
 import Home from './components/home/Home';
-import PrivateRoute from './utils/router/privateRoute';
 import Login from './components/auth/login/Login';
 import Register from './components/auth/register/Register';
 import Recovery from './components/auth/recovery/Recovery';
@@ -14,7 +13,7 @@ import Reference from './components/reference/Reference';
 
 
 const App = (props: any) => {
-  const { isAuth } = props;
+const { isAuth } = props;
 
     return (
       <div className="App">
@@ -22,9 +21,11 @@ const App = (props: any) => {
         <Routes>
           
           <Route
-          path="/chat"
-          element={isAuth ? <HomeChat/> : <Navigate to="/login" replace/>}
-          />
+            path="/chat"
+            element={isAuth ? <HomeChat/> : <Navigate to="/login" replace/>}/>
+          <Route
+            path="/chat/:id"
+            element={isAuth ? <HomeChat/> : <Navigate to="/login" replace/>}/>
 
           <Route path="/" element={<Home />} />
           <Route path="/reference" element={<Reference />} />

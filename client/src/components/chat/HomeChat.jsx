@@ -5,12 +5,11 @@ import { Button  } from 'antd';
 
 // import Messages from './Messages/Messages';
 // import Dialogs from './Dialogs/Dialogs';
-import Status from './Status/Status';
+import Status from '../../containers/Status';
 import Dialogs from '../../containers/Dialogs';
 import Messages from '../../containers/Messages';
-import Chatinput from './Chatinput/Chatinput';
+import Chatinput from '../../containers/ChatInput';
 import "./HomeChat.scss";
-
 
 
 function HomeChat() {
@@ -36,12 +35,8 @@ function HomeChat() {
           <div className="chat__dialog">
             <div className="chat__dialog-header">
               <div />
-              <div className="chat__dialog-header-center">
-                <b className="chat__dialog-header-username">Гай Юлий Цезарь</b>
-                <div className="chat__dialog-status">
-                  <Status online/>
-                </div>
-              </div>
+              <Status online/>
+              
               <Button type="ghost" shape="circle" icon={<EllipsisOutlined  style={{ fontSize: '22px' }}/>} />
             </div>
             <div className="chat__dialog-messages">

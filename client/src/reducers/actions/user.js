@@ -7,11 +7,12 @@ const Actions = {
         payload: data,
       }),
       fetchUserData: () => dispatch => {
-        userAPI.getMe().then(({ data }) => {
-          dispatch(Actions.setUserData(data));
+        userAPI.getMe().then(response => {
+          dispatch(Actions.setUserData(response.data));
+          
         })
       },
-      fetchUserLogin: postData => dispatch => {
+      fetchUserLogin: postData => dispatch => {        
         return userAPI.login(postData).then(({data}) => {
           const { status, token } = data;
           if (status === 'error') {
@@ -32,7 +33,16 @@ const Actions = {
             dispatch(Actions.fetchUserData());
           }
           return data;
-        });
+        })
+        .catch (({ response }) => {
+          if (response.status === 403) {
+            openNotification({
+              title: 'Ошибка при авторизации',
+              text: 'Неверный логин или пароль',
+              type: 'error',
+            });
+          }
+        } );
       }, 
       fetchUserRegister: postData => dispatch => {
         return userAPI.register(postData).then(({data}) => {

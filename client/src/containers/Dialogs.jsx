@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import axios from 'axios';
+
 import dialogsActions from '../reducers/actions/dialogs' 
 import BaseDialogs from '../components/chat/Dialogs/Dialogs';
-
+import socket from '../core/socket';
 
 //axios.defaults.baseURL = 'http://localhost:9999';
 
@@ -19,26 +19,53 @@ const parseDates = (data) => {
 };
 
 
-const Dialogs = ({ fetchDialogs, currentDialogId, setCurrentDialogId, items, userId }) => {
+const Dialogs = ({ 
+    fetchDialogs, 
+    currentDialogId, 
+    setCurrentDialogId,
+    items, 
+    userId 
+}) => {
     const [inputValue, setValue] = useState("");  
     const [filtered, setFilteredItems] = useState(Array.from(items)); 
 
-    const onChangeInput = value => {
+    const onChangeInput = (value = "") => {
         setFilteredItems(items.filter(
             dialog => 
-            dialog.user.fullname.toLowerCase().indexOf(value.toLowerCase()) >= 0
+            dialog.author.username.toLowerCase().indexOf(value.toLowerCase()) >= 
+            0 ||
+            dialog.partner.username.toLowerCase().indexOf(value.toLowerCase()) >= 
+            0
         ));
         setValue(value);
     };
 
+    const onNewDialog = () => {
+        fetchDialogs();
+    }
+
+
     useEffect(() => {
-        if (!items.length) {
+        if (items.length) {
+            onChangeInput('');
+        }
+    }, [items])
+
+    useEffect(() => {
+        fetchDialogs();
+        /*if (!items.length) {
             fetchDialogs();
+            
         } else {
              // Преобразуйте строки в даты перед установкой в состояние
              setFilteredItems(parseDates(JSON.stringify(items)));
-        }
-    }, [items]);
+        }*/
+
+        socket.on('SERVER:DIALOG_CREATED', onNewDialog);
+        return () => socket.removeListener('SERVER:DIALOG_CREATED', onNewDialog);
+    }, []);
+
+    
 
     return (
         <BaseDialogs 

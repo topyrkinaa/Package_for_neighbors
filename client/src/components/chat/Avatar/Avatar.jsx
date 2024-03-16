@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import md5 from "md5";
 
 import generateAvatarFromHash from '../../../utils/helpers/generateAvatarFromHash';
 
@@ -15,8 +16,9 @@ const Avatar = ({ user }) => {
       />
     );
   }
-// TODO: доработать id
-  const { color, colorLighten } = generateAvatarFromHash('655637429096566cfb927368');
+
+
+  const { color, colorLighten } = generateAvatarFromHash(md5(user.id));
   const firstChar = user.username[0].toUpperCase();
   
   return (

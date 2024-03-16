@@ -12,9 +12,19 @@ const Chatinput = props => {
     const [value, setValue] = useState("");
     const [emojiPickerVisible, setShowEmojiPicker] = useState("");
 
+    const { onSendMessage, currentDialogId } = props;
+
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!emojiPickerVisible);
     };
+
+    const handleSendMessage = (e) => {
+        if (e.keyCode === 13) {
+            onSendMessage(value, currentDialogId);
+            setValue("");
+        }
+        
+    }
 
     return (
         <div className="chat-input">
@@ -28,8 +38,11 @@ const Chatinput = props => {
         </div>
         <Input 
             onChange={e => setValue(e.target.value)} 
+            onKeyUp={handleSendMessage}
             size="large" 
-            placeholder='Введите текст сообщения...'/>
+            placeholder='Введите текст сообщения...'
+            value={value}/>
+           
         <div className="chat-input__actions">
             <Upload name='chat-input__actions-uplpad-btn' accept='.jpg,.jpeg,,.png,.gif,.bmp' multiple={true}>
                 <Button type="ghost" shape="circle" icon={<CameraOutlined />}  />

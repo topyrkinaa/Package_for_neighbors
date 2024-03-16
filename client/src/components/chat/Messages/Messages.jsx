@@ -7,7 +7,7 @@ import Message from "../message/Message";
 import './Messages.scss';
 // && items.length
 
-const Messages = ({ blockRef, isLoading, items }) => {
+const Messages = ({ blockRef, isLoading, items, user }) => {
     return (
     <div 
     ref={blockRef}
@@ -16,7 +16,8 @@ const Messages = ({ blockRef, isLoading, items }) => {
             <Spin size="large" tip="Загрузка сообщений..." /> 
         ) : items && !isLoading ? (
             items.length > 0 ? (
-            items.map(item => <Message key={item.id} {...item} />)
+            //items.map(item => <Message key={item.id} {...item} />)
+            items.map(item => <Message key={item.id} {...item} isMe={user.id === item.user.id}/>)
             ) : ( 
             <Empty description="Диалог пуст" /> 
             )

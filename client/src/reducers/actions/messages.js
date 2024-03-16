@@ -1,10 +1,25 @@
 import messagesAPI from '../../core/messages';
 
 const Actions = {
-    setMessages: items => ({
+      setMessages: items => ({
         type: 'MESSAGES:SET_ITEMS',
         payload: items,
       }),
+      addMessage: message => (dispatch, getState) => {
+        const { dialogs } = getState();
+        const { currentDialogId } = dialogs;
+
+        if (currentDialogId === message.dialog.id.toString()) {
+
+          dispatch({
+            type: 'MESSAGES:ADD_MESSAGE',
+            payload: message
+          });
+        }
+      },
+      fetchSendMessage: (text, dialogid) => dispatch => {
+        messagesAPI.send(text, dialogid);
+      },
       setIsLoading: bool => ({
         type: 'MESSAGES:SET_IS_LOADING',
         payload: bool,
