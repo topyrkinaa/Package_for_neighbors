@@ -7,6 +7,7 @@ const UserController = require('../controller/user.controller.js');
 const userRouter = (io) => {
     const UserCtr = new UserController(io); 
     
+    router.get('/find', UserCtr.findUser)
     router.post('/register', UserCtr.createUser)
     router.get('/register', UserCtr.getUsers)
     router.get('/register/:id', UserCtr.getOneUser)

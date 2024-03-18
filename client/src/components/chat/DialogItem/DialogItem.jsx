@@ -36,7 +36,7 @@ const DialogItem = ({
   <Link to={`/chat/${id}`} style={{ textDecoration: 'none' }}>
   
   <div className={ClassNames('dialogs__item', {
-    'dialogs__item--online': true,
+    'dialogs__item--online': false,
     'dialogs__item--selected': currentDialogId === id
   })}
     onClick={() => onSelect(id)}

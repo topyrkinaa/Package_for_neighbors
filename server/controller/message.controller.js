@@ -84,26 +84,54 @@ class MessageController {
 
     delete = async(req, res) => {
     try {
-        const messageId = req.params.id;
+        const messageId = req.query.id;
+        const email = req.user.data
+        const user = await db.query(`SELECT * FROM users WHERE email = '${email}' `)
+
 
         // Проверяем существование сообщения
         const existingMessage = await db.query('SELECT * FROM messages WHERE id = $1', [messageId]);
-
-        if (!existingMessage) {
-            return res.status(404).json({
+        if (!existingMessage.rows[0]) {
+            return res.status(404).json({ 
+                status: 'error',
                 message: 'Message not found',
             });
         }
+        
+        if (user.rows[0].id === existingMessage.rows[0].authorid) {
 
-        // Удаляем сообщение
-        await db.query('DELETE FROM messages WHERE id = $1', [messageId]);
+            const dialogid = existingMessage.rows[0].dialogid;
+            const dialogs = await db.query('SELECT * FROM dialogs WHERE id = $1', [dialogid]);
 
-        res.json({
-            message: 'Message deleted',
-        });
+            if (parseInt(dialogs.rows[0].lastmessageid) === parseInt(messageId)) {
+
+                const previousMessage = await db.query('SELECT * FROM messages WHERE dialogid = $1 AND id < $2 ORDER BY id DESC LIMIT 1', [dialogid, messageId]);
+                
+                if (previousMessage.rows.length > 0) {
+                     // Обновить lastmessageid в записи dialogs
+
+                    await db.query('UPDATE dialogs SET lastmessageid = $1 WHERE id = $2', [previousMessage.rows[0].id, dialogid]);
+                } else {
+                    // Если предыдущее сообщение не найдено, установить lastmessageid в NULL
+                    db.query('DELETE FROM dialogs WHERE id = $1 ', [dialogid]);
+                }
+            }
+            db.query('DELETE FROM messages WHERE id = $1', [messageId]);
+            return res.json({
+                status: 'success',
+                message: 'Message deleted',
+            });
+        } else {
+            return res.json({ 
+                status: 'error',
+                message: 'Вы не являетесь владельцем сообщения',
+            });
+        }
+
     } catch (error) {
         console.error('Error deleting message:', error);
         res.status(500).json({
+            status: 'error',
             message: 'Internal server error',
         });
     }

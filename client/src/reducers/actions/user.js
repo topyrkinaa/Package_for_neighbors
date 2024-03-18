@@ -6,11 +6,20 @@ const Actions = {
         type: 'USER:SET_DATA',
         payload: data,
       }),
+      setIsAuth: bool => ({
+        type: 'USER:SET_IS_AUTH',
+        payload: bool,
+      }),
       fetchUserData: () => dispatch => {
         userAPI.getMe().then(response => {
           dispatch(Actions.setUserData(response.data));
-          
-        })
+          //TODO доделать catch
+        }).catch( err =>{
+          if (err.status === 403) {
+            dispatch(Actions.setIsAuth(false));
+            delete window.localStorage.token;
+          }
+        });
       },
       fetchUserLogin: postData => dispatch => {        
         return userAPI.login(postData).then(({data}) => {

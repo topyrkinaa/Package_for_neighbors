@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import ruLocale from "date-fns/locale/ru";
-
+import { Popover, Button } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 
 import { convertCurrentTime } from '../../../utils/helpers';
 
@@ -96,7 +97,8 @@ const Message = ({
   isMe, 
   isReaded, 
   attachments, 
-  isTyping 
+  isTyping ,
+  onRemoveMessage
 }) => {
 
   return (
@@ -107,6 +109,18 @@ const Message = ({
     'message--image': attachments && attachments.length === 1
     })}>
     <div className='message__content'>
+    <Popover
+      content={
+        <div>
+          <Button onClick={onRemoveMessage}>Удалить сообщение</Button>
+        </div>
+      }
+      trigger="click">
+        <div className='message__icon-actions'> 
+          <Button type="ghost" shape="circle" icon={<EllipsisOutlined  style={{ fontSize: '22px' }}/>} />
+        </div>
+      </Popover>
+
      <IconReaded isMe={isMe} isReaded={isReaded} />
       <div className='message__avatar'>
         <Avatar user={user} />

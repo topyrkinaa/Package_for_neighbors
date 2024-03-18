@@ -7,9 +7,9 @@ const messageRouter = (io) => {
     
     const MessageCtr = new MessageController(io);
 
+    router.delete('/messages', MessageCtr.delete);
     router.get('/messages', MessageCtr.index);
     router.post('/messages', MessageCtr.create);
-    router.delete('/messages/:id', MessageCtr.delete);
 
     return router;
 };

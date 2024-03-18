@@ -50,6 +50,18 @@ class UserController {
       }
     }
 
+    findUser = async(req,res) => {
+      try {
+        const qwery = req.query.qwery
+        console.log(qwery);
+        const users = await db.query('SELECT * FROM users WHERE email LIKE $1 OR username LIKE $1', [`%${qwery}%`]);
+        res.json(users.rows)
+      } catch (error) {
+        console.error(error)
+        res.status(404).json({ status: 'error', message: 'Internal Server Error', error: error.message })
+      }
+    }
+    
     getme = async(req,res) => {
       try {
         const email = req.user.data
@@ -60,6 +72,7 @@ class UserController {
         res.status(500).json({ message: 'Internal Server Error', error: error.message })
       }
     }
+
 
 
     updateUser = async (req,res) => {
@@ -97,7 +110,7 @@ class UserController {
           return res.json({ status: "error" });
         }
     
-        const update = db.query(`UPDATE users SET last_seen = $1 WHERE email = $2`, [new Date(), email]);
+        db.query(`UPDATE users SET last_seen = $1 WHERE email = $2`, [new Date(), email]);
         const status = "success"
         const token = createJWToken(email);
 

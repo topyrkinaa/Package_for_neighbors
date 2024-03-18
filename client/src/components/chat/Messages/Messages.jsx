@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Empty, Spin, Alert } from 'antd';
+import { Empty, Spin } from 'antd';
 import classNames from "classnames";
 
 import Message from "../message/Message";
 import './Messages.scss';
 // && items.length
 
-const Messages = ({ blockRef, isLoading, items, user }) => {
+const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
     return (
     <div 
     ref={blockRef}
@@ -17,7 +17,12 @@ const Messages = ({ blockRef, isLoading, items, user }) => {
         ) : items && !isLoading ? (
             items.length > 0 ? (
             //items.map(item => <Message key={item.id} {...item} />)
-            items.map(item => <Message key={item.id} {...item} isMe={user.id === item.user.id}/>)
+            items.map(item => 
+            <Message 
+                key={item.id} 
+                {...item} 
+                isMe={user.id === item.user.id} 
+                onRemoveMessage={onRemoveMessage.bind(this, item.id)}/>)
             ) : ( 
             <Empty description="Диалог пуст" /> 
             )

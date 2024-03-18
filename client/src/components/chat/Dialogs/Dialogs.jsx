@@ -20,6 +20,7 @@ const Dialogs = ({
 }) => (
     <div className="dialogs">
       <div className="dialogs__search">
+       
             <Search
                placeholder="Поиск среди контактов"
                onChange={e => onSearch(e.target.value)}

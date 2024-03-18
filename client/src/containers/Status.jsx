@@ -6,16 +6,14 @@ import BaseStatus from '../components/chat/Status/Status';
 
 const Status = ({ currentDialogId, user, dialogs }) => {
 
-    if(!dialogs.length || !currentDialogId) {
+    if(dialogs.length == 0 || !currentDialogId) {
         return null;
     }
-    console.log(currentDialogId, dialogs);
     
     const currentDialogObj = dialogs.filter(
         dialog => dialog.id.toString() === currentDialogId.toString()
       )[0];
 
-        console.log(currentDialogObj);
     let partner = {};
 
     if (currentDialogObj.author.id === user.id) {

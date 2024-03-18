@@ -12,13 +12,12 @@ const Dialogs = ({
     addMessage, 
     items, 
     isLoading,
+    removeMessageById,
     user
  }) => {
     const messagesRef = useRef(null);
 
     const onNewMessage = data => {
-        //TODO доделать addMessage он не работает
-        //fetchMessages(currentDialogId);
         addMessage(data);
     };
 
@@ -42,7 +41,8 @@ const Dialogs = ({
         user={user} 
         blockRef={messagesRef} 
         items={items} 
-        isLoading={isLoading} />
+        isLoading={isLoading} 
+        onRemoveMessage={removeMessageById}/>
     );
 };
 
