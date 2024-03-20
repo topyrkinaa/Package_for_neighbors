@@ -91,7 +91,7 @@ export default function DrawerAppBar(props: Props) {
       <ThemeProvider theme={whiteTheme}>
         <AppBar component="nav">
           <Toolbar>
-            <img src={String(Logo)} alt="logo" onClick={() => navigate("/")} onKeyDown={() => navigate("/")}  style={{ cursor: 'pointer' }}  />
+            <img src={String(Logo)} alt="logo" onClick={() => navigate("/homesocial")} onKeyDown={() => navigate("/homesocial")}  style={{ cursor: 'pointer' }}  />
             <Typography
               variant="h5"
               component="div"

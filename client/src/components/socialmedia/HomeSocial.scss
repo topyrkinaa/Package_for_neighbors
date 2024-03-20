@@ -1,0 +1,122 @@
+.home {
+    height: 100%;
+}
+
+.menu {
+    display: flex;
+    //height: 100%;
+    background: #fff;
+    width: 1440px; //1140px было
+    height: 680px;
+    margin: 0 auto;
+    box-shadow: 2px 2px 5px rgba(5, 70, 240, 0.25);   
+
+    &__sidebar {
+        width: 390px;
+        border-right: solid #F7F7F7 ;
+        &-button {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer;
+                    
+                    &:active,
+                    &:hover {
+                        background-color: #F3F7FF;
+                    }
+            
+            .anticon {
+                margin-right: 15px;
+                font-size: 22px;
+            }
+        }
+    }
+
+    &__contents {
+        flex: 1;
+        position: relative;
+
+        .ant-empty {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 2px solid #F7F7F7;
+            .ant-btn-circle {   
+                i {
+                    font-size: 20px;
+                }
+            }
+
+            &-center {
+                text-align: center;  
+            }
+            &-username {
+                display: block;
+                margin-bottom: -4px;
+                font-weight: 900;
+                font-family: 'Comfortaa';
+                font-size: 14px;
+
+            }
+        }
+
+        &-messages {
+            height: calc(100% - 138px);
+        }
+    }
+
+    &__text {
+        height: 110px;
+        width: 500px;
+        border-radius: 0 60px 60px 0;
+        background-color: #0546F0;
+        color: #fff;
+        margin-bottom: 50px;
+        padding-left: 5px;
+      &-hh {
+        font-family: 'Montserrat';
+        font-weight: 700;
+        font-size: 25px;
+      }
+      &-pp {
+        font-family: 'Comfortaa';
+        font-weight: 700;
+        font-size: 18px;
+      }
+    }
+  
+    &__info {
+        height: 40px;
+        width: 320px;
+        border-radius: 0 60px 60px 0;
+        background-color: #fff;
+        color: #0546F0;
+        margin-top: 380px;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+          color: #fff; /* Изменяем цвет текста при наведении */
+          background-color: #0546F0; /* Изменяем цвет фона при наведении */
+        }
+            .anticon {
+                margin-right: 15px;
+                font-size: 22px;
+            }
+    }
+
+
+}
+
+

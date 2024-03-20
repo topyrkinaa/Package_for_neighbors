@@ -31,7 +31,7 @@ const Chatinput = props => {
         <div className="chat-input__smile-btn">
             {emojiPickerVisible && (
                 <div className="chat-input__emoji-picker">
-                     <em-emoji-picker set="apple" previewPosition="none"/>
+                     <em-emoji-picker onSelect={(emoji, event) => console.log(emoji, event)} set="apple" previewPosition="none"/>
                 </div>
             )}
             <Button onClick={toggleEmojiPicker} type="ghost" shape="circle" icon={<SmileOutlined />} />

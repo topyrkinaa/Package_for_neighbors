@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button, notification, Space } from 'antd';
+import {  notification } from 'antd';
 
 export default({text, type = 'info', title}) => notification[type](
 

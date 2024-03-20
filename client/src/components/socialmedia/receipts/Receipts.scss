@@ -1,0 +1,96 @@
+@import '../../../utils/variables';
+
+
+.home__content {
+
+  &-container {
+    margin-left: 25px;
+    margin-top: 30px;
+  }
+
+    &-item {
+      $item: &;
+      width: 1000px;
+      display: flex;
+      padding: 15px 20px;
+      color: rgba(0, 0, 0, 0.87);
+      border: 1px solid #ececec;
+      border-radius: 12px;
+      box-shadow: 2px 2px 5px rgba(5, 70, 240, 0.25);   
+      cursor: pointer;
+      margin-bottom: 15px;
+
+        &-icon {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          position: relative;
+          flex: 0 0 40px;
+          background-color: #00A82F;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .anticon {
+            color: #fff;
+            font-size: 22px;
+          }
+      }
+
+      &-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1;
+
+        &-top {
+          display: flex;
+          b {
+              font-family: 'Comfortaa';
+              font-size: 16px;
+              font-weight: 700;
+              flex: 1;
+              margin-bottom: 2px;
+          }
+        }
+
+        &-bottom {
+          position: relative;
+          p {
+              opacity: 0.4;
+              font-family: 'Comfortaa';
+              font-size: 14px;
+              line-height: 20px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              width: 260px;
+              height: 1.2em;
+              white-space: nowrap;
+          }
+        }
+      }
+
+      &-status {
+        right: 0;
+        position: relative;
+        flex: 0 0 40px;
+        bottom: 0;
+        line-height: 17px;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        box-shadow: 0 0 6px #fafafa;
+
+              p {
+                opacity: 0.4;
+              font-family: 'Comfortaa';
+              font-size: 14px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              height: 1.2em;
+              white-space: nowrap;
+              }
+      }
+    }
+}

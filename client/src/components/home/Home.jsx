@@ -23,11 +23,6 @@ function Home() {
             <div
               className='promo__info'
               onClick={handleNavigate}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleNavigate();
-                }
-              }}
               role="button"  
               tabIndex={0}  
             >

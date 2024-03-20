@@ -6,7 +6,10 @@ create Table users (
     patronymic VARCHAR(255),
     password VARCHAR(255),
     last_seen DATE,
-    avatar VARCHAR(255)
+    avatar VARCHAR(255),
+    telephone VARCHAR(255),
+    apartmentNum INT,
+    roommates VARCHAR(255),
 );
 
 create Table dialogs (
@@ -31,3 +34,7 @@ create Table messages (
 
 
 SELECT COUNT(1) FROM information_schema.table_constraints WHERE constraint_name='fk_authorId_MU' AND table_name='messages';
+ALTER TABLE users ADD roommates VARCHAR(255);
+
+UPDATE users SET telephone = "+7 (927) 789 90 98" WHERE id =10;
+UPDATE users SET apartmentNum = 10 WHERE id =10;
