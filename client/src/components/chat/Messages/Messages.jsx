@@ -5,7 +5,6 @@ import classNames from "classnames";
 
 import Message from "../message/Message";
 import './Messages.scss';
-// && items.length
 
 const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
     return (
@@ -16,12 +15,12 @@ const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
             <Spin size="large" tip="Загрузка сообщений..." /> 
         ) : items && !isLoading ? (
             items.length > 0 ? (
-            //items.map(item => <Message key={item.id} {...item} />)
             items.map(item => 
             <Message 
                 key={item.id} 
                 {...item} 
-                isMe={user.id === item.user.id} 
+                isMe={
+                    user && user.id === item.user.id} 
                 onRemoveMessage={onRemoveMessage.bind(this, item.id)}/>)
             ) : ( 
             <Empty description="Диалог пуст" /> 

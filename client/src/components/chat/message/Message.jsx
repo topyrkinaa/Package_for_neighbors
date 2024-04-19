@@ -5,6 +5,9 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import ruLocale from "date-fns/locale/ru";
 import { Popover, Button } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
+import reactStringReplace from 'react-string-replace';
+
+
 
 import { convertCurrentTime } from '../../../utils/helpers';
 
@@ -129,7 +132,10 @@ const Message = ({
       {(audio || text || isTyping) && (
           <div className="message__bubble">
             
-            {text && <p className="message__text">{text}</p> }
+            {text && (<p className="message__text">
+              {reactStringReplace(text, /:(.+?):/g, (match,i) => (
+                <em-emoji id={match} set="apple"></em-emoji>
+              ))}</p> )}
             {isTyping && ( 
             <div className="message__typing">
                   <span />

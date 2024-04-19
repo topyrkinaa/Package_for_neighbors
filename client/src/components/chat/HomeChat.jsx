@@ -20,10 +20,10 @@ function HomeChat() {
         <Sidebar />
           <div className="chat__dialog">
             <div className="chat__dialog-header">
-              <div />
+              
               <Status online/>
               
-              <Button type="ghost" shape="circle" icon={<EllipsisOutlined  style={{ fontSize: '22px' }}/>} />
+              <div />
             </div>
             <div className="chat__dialog-messages">
               <Messages />

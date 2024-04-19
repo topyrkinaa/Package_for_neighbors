@@ -1,13 +1,14 @@
 import React from 'react';
 import { CalculatorOutlined } from '@ant-design/icons';
-import MenuSidebar from '../menuSidebar/MenuSidebar';
 import "./Receipts.scss";
+
+/* eslint-disable */
 
 const Receipts =  ({ user }) => {
   return (
           <div className='home__content-container'>
             
-            <div className="home__content-item">
+            <div className="home__content-item no-money">
               <div className="home__content-item-icon">
                 <CalculatorOutlined />
               </div>
@@ -24,7 +25,7 @@ const Receipts =  ({ user }) => {
               </div>
             </div>
 
-            <div className="home__content-item">
+            <div className="home__content-item no-money">
               <div className="home__content-item-icon">
                 <CalculatorOutlined />
               </div>
@@ -37,7 +38,7 @@ const Receipts =  ({ user }) => {
                 </div>
               </div>
               <div className="home__content-item-status">
-                <p>оплачено</p>
+                <p>не оплачено</p>
               </div>
             </div>
 

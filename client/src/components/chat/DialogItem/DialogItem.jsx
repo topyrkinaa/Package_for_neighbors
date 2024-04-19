@@ -3,7 +3,8 @@ import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import isToday from 'date-fns/isToday';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import reactStringReplace from 'react-string-replace';
 
 import IconReaded from '../IconReaded/IconReaded';
 import './DialogItem.scss';
@@ -25,6 +26,15 @@ const isOnline = last_seen => (
   differenceInMinutes(new Data().toIsoString(), last_seen) < 5
 )
 
+const isMeName = partner => {
+    if (partner.id === user.id) {
+        partner = currentDialogObj.partner;
+    } else {
+
+        partner = partner;
+    }
+  }
+
 const DialogItem = ({ 
   id, 
   isMe, 
@@ -34,7 +44,6 @@ const DialogItem = ({
   lastMessage 
 }) => (
   <Link to={`/chat/${id}`} style={{ textDecoration: 'none' }}>
-  
   <div className={ClassNames('dialogs__item', {
     'dialogs__item--online': false,
     'dialogs__item--selected': currentDialogId === id
@@ -46,15 +55,21 @@ const DialogItem = ({
     </div>
     <div className="dialogs__item-info">
       <div className="dialogs__item-info-top">
-        <b>{partner.surname} {partner.username}</b>
+        <b>{partner.username} {partner.surname}</b>
         <span>
           {getMessageTime(lastMessage.created_at)}
         </span>
       </div>
       <div className="dialogs__item-info-bottom">
-        <p>
+
+      {lastMessage.title && (<p>
+              {reactStringReplace(lastMessage.title, /:(.+?):/g, (match,i) => (
+                <em-emoji id={match} set="apple"></em-emoji>
+              ))}</p> )}
+
+        {/*<p>
           {lastMessage.title}
-        </p>
+        </p>*/}
         {isMe && <IconReaded isMe />}
         {lastMessage.unread > 0 &&
           <div className="dialogs__item-info-bottom-count">

@@ -6,7 +6,6 @@ import dialogsActions from '../reducers/actions/dialogs'
 import BaseDialogs from '../components/chat/Dialogs/Dialogs';
 import socket from '../core/socket';
 
-//axios.defaults.baseURL = 'http://localhost:9999';
 
 // Функция для преобразования строковых дат в объекты Date
 const parseDates = (data) => {
@@ -40,10 +39,6 @@ const Dialogs = ({
         setValue(value);
     };
 
-    const onNewDialog = () => {
-        fetchDialogs();
-    }
-
 
     useEffect(() => {
         if (items.length) {
@@ -61,11 +56,14 @@ const Dialogs = ({
              setFilteredItems(parseDates(JSON.stringify(items)));
         }*/
 
-        socket.on('SERVER:DIALOG_CREATED', onNewDialog);
-        return () => socket.removeListener('SERVER:DIALOG_CREATED', onNewDialog);
+        socket.on('SERVER:DIALOG_CREATED', fetchDialogs);
+        socket.on('SERVER:NEW_MESSAGE', fetchDialogs);
+        return () => {
+            socket.removeListener('SERVER:DIALOG_CREATED', fetchDialogs);
+            socket.removeListener('SERVER:NEW_MESSAGE', fetchDialogs);
+    }
     }, []);
 
-    
 
     return (
         <BaseDialogs 
