@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { connect } from 'react-redux';
+import { Empty } from 'antd';
 import PropTypes from "prop-types";
 
 import messagesActions from '../reducers/actions/messages';
@@ -13,8 +14,13 @@ const Dialogs = ({
     items, 
     isLoading,
     removeMessageById,
-    user
+    user,
+    attachments
  }) => {
+    if (!currentDialogId) {
+        return <Empty description="Начните диалог" />;
+    }
+
     const messagesRef = useRef(null);
 
     const onNewMessage = data => {
@@ -48,10 +54,11 @@ const Dialogs = ({
 
 
 export default connect(
-    ({ dialogs, messages, user }) => ({
+    ({ dialogs, messages, user, attachments }) => ({
         currentDialogId: dialogs.currentDialogId,
         items: messages.items,
         isLoading: messages.isLoading,
+        attachments: attachments.items,
         user: user.data
     }), 
     messagesActions

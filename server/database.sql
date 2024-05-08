@@ -26,10 +26,20 @@ create Table messages (
     authorId INT NOT NULL,
     title VARCHAR(4096),
     dialogId INT NOT NULL,
-    unread boolean,
+    readed boolean,
     created_at text,
     ALTER TABLE messages ADD CONSTRAINT fk_authorId_MU FOREIGN KEY(authorId) REFERENCES users(id),
     ALTER TABLE messages ADD CONSTRAINT fk_dialogId_MD FOREIGN KEY(dialogId) REFERENCES dialogs(id)
+);
+
+create Table uploadFile (
+    id SERIAL PRIMARY KEY,
+    authorId INT NOT NULL,
+    filename VARCHAR(4096),
+    size numeric(10,2),
+    ext VARCHAR(4096),
+    url VARCHAR(4096),
+    messageId INT NOT NULL
 );
 
 

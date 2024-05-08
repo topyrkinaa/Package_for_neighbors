@@ -24,3 +24,11 @@ router.post('/messages', (req,res) => {
         res.send({message: "Server error"})
     }
 })
+
+router.post('/files', uploader.single('image'), (req,res) => {
+    try {   
+    } catch (e) {
+        console.log(e)
+        res.send({message: "Server error"})
+    }
+})

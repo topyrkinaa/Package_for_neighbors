@@ -98,18 +98,17 @@ const Message = ({
   date, 
   audio,
   isMe, 
-  isReaded, 
+  readed, 
   attachments, 
   isTyping ,
   onRemoveMessage
 }) => {
-
   return (
   <div className={ClassNames('message', { 
     'message--isme': isMe, 
     'message--is-typing': isTyping,
     'message--is-audio': audio,
-    'message--image': attachments && attachments.length === 1
+    'message--image': attachments && attachments.length === 1 && !text
     })}>
     <div className='message__content'>
     <Popover
@@ -124,7 +123,7 @@ const Message = ({
         </div>
       </Popover>
 
-     <IconReaded isMe={isMe} isReaded={isReaded} />
+     <IconReaded isMe={isMe} isReaded={readed} />
       <div className='message__avatar'>
         <Avatar user={user} />
       </div>
@@ -146,7 +145,7 @@ const Message = ({
             { audio && ( <MessageAudio audioSrc={audio}/> )}
           </div> 
           )}
-
+          
           { attachments && (
             <div className="message__attachments">
            {attachments.map((item, index) => (

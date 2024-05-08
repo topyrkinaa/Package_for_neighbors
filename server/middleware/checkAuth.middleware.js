@@ -3,7 +3,7 @@ const verifyJWToken = require('../utils/verifyJWToken')
 function checkAuth(req, res, next) {
     const token = req.headers.token;
 
-    if (req.path === '/api/auth/login' || req.path === '/api/auth/register') {
+    if (req.path === '/api/auth/login' || req.path === '/api/auth/register' || req.path === '/api/files') {
         return next();
     }
 

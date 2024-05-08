@@ -40,9 +40,7 @@ class DialogController {
                 return res.status(404).json({
                     message: 'Dialogs not found',
                 });
-            }
-    
-            
+            } 
     
             // Для каждого диалога получаем полные данные о пользователях
             const dialogsWithUsers = await Promise.all(dialogs.rows.map(async (dialog) => {
@@ -56,7 +54,7 @@ class DialogController {
                     lastMessage: lastMessage.rows[0],
                 };
             })); 
-    
+
             return res.json(dialogsWithUsers);
         } catch (error) {
             console.error(error);
@@ -88,7 +86,7 @@ class DialogController {
                 
             // Вставляем новое сообщение в таблицу messages для установки lastMessage
             const newMessage = await db.query(
-            'INSERT INTO messages (title, dialogid, authorid, unread, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            'INSERT INTO messages (title, dialogid, authorid, readed, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
             [title, newDialog.rows[0].id, user.rows[0].id, false, new Date()] 
             );
 
@@ -109,7 +107,7 @@ class DialogController {
                     id: newMessage.rows[0].id,
                     authorid: user.rows[0].id,
                     text: newMessage.rows[0].title,
-                    unread: false,
+                    readed: false,
                     created_at: newMessage.rows[0].created_at
                 }
                 }
@@ -124,7 +122,7 @@ class DialogController {
                 lastmessageid: {
                     id: newMessage.rows[0].id,
                     authorid: user.rows[0].id,
-                    unread: false,
+                    readed: false,
                     created_at: newMessage.rows[0].created_at
                 }
                 }

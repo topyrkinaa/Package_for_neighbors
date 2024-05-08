@@ -55,6 +55,7 @@
     &__attachments {
       display: flex;
       margin-bottom: 5px;
+      order: 1;
       &-item {
         margin-right: 5px;
         cursor: pointer;
@@ -96,6 +97,7 @@
         width: 280px;
         position: relative;
         overflow: hidden;
+        
       }
 
       #{$self}__audio {
@@ -185,6 +187,7 @@
         #{$self}__info {
           align-items: center;
           text-align: right;
+          display: flex;
         }
     
         #{$self}__bubble {

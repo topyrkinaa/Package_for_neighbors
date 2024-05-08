@@ -21,7 +21,6 @@ const parseDates = (data) => {
 const Dialogs = ({ 
     fetchDialogs, 
     currentDialogId, 
-    setCurrentDialogId,
     items, 
     userId 
 }) => {
@@ -48,14 +47,6 @@ const Dialogs = ({
 
     useEffect(() => {
         fetchDialogs();
-        /*if (!items.length) {
-            fetchDialogs();
-            
-        } else {
-             // Преобразуйте строки в даты перед установкой в состояние
-             setFilteredItems(parseDates(JSON.stringify(items)));
-        }*/
-
         socket.on('SERVER:DIALOG_CREATED', fetchDialogs);
         socket.on('SERVER:NEW_MESSAGE', fetchDialogs);
         return () => {
@@ -71,7 +62,6 @@ const Dialogs = ({
             items={filtered} 
             onSearch={onChangeInput} 
             inputValue={inputValue} 
-            onSelectDialog={setCurrentDialogId}
             currentDialogId={currentDialogId}
         />
     );

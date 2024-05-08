@@ -50,7 +50,7 @@ function Login() {
     dispatch(Actions.fetchUserLogin(data)).then(({ status }) => {
       if (status === 'success') {
         setTimeout(() => {
-          navigate("/chat");
+          navigate("/homesocial");
         }, 1000)
       }
     })

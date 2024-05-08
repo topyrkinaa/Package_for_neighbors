@@ -1,42 +1,44 @@
-import React from 'react';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { Button  } from 'antd';
+import React, {useEffect} from 'react';
+import  withRouter   from '../../utils/helpers/withRouter';
+import { connect } from 'react-redux';
 
-
-// import Messages from './Messages/Messages';
-// import Dialogs from './Dialogs/Dialogs';
+import dialogsActions from '../../reducers/actions/dialogs' 
 import Sidebar from '../../containers/Sidebar';
 import Status from '../../containers/Status';
 import Messages from '../../containers/Messages';
 import Chatinput from '../../containers/ChatInput';
 import "./HomeChat.scss";
 
+const HomeChat = (props) => {
+  const {setCurrentDialogId} = props;
 
-function HomeChat() {
+  useEffect(() => {
+    const { location: { pathname } } = props;
+    const dialogId = pathname.split('/').pop();
+    if (dialogId != 'chat'){
+      setCurrentDialogId(dialogId);
+    } else {
+      setCurrentDialogId('');
+    }
+
+  }, [props.location.pathname])
   return (
     <section className="home">
       
       <div className="chat">
         <Sidebar />
-          <div className="chat__dialog">
-            <div className="chat__dialog-header">
-              
+          <div className="chat__dialog"> 
               <Status online/>
-              
-              <div />
-            </div>
-            <div className="chat__dialog-messages">
               <Messages />
-            </div>
-
             <div className="chat__dialog-input">
             <Chatinput />
             </div>
         </div>
       </div>
     </section> 
+    
       
   );
 }
 
-export default HomeChat;
+export default withRouter(connect(({ dialogs }) => dialogs, dialogsActions)(HomeChat));

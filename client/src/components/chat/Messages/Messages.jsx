@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Empty, Spin } from 'antd';
 import classNames from "classnames";
@@ -7,8 +7,12 @@ import Message from "../message/Message";
 import './Messages.scss';
 
 const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
+
     return (
-    <div 
+    <div className="chat__dialog-messages" 
+        style={{ 'height': `calc(100% - 250px)` }}
+        >
+        <div  
     ref={blockRef}
     className={classNames('messages', {'messages--loading': isLoading})}> 
     { isLoading ? (
@@ -28,6 +32,7 @@ const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
             ) : (
             <Empty description="Начните диалог" />   
         )}
+    </div>
     </div>
     );
 };

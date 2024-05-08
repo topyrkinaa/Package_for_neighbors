@@ -2115,6 +2115,11 @@
     redux-thunk "^2.4.2"
     reselect "^4.1.8"
 
+"@remix-run/router@1.15.3":
+  version "1.15.3"
+  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.15.3.tgz"
+  integrity sha512-Oy8rmScVrVxWZVOpEF57ovlnhpZ8CCPlnIIumVcV9nFdiSIrus99+Lw78ekXyGvVDlIsFJbSfmSovJUhCWYV3w==
+
 "@remix-run/router@1.7.1":
   version "1.7.1"
   resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.7.1.tgz"
@@ -8730,6 +8735,13 @@ react-router-dom@^6.13.0:
   dependencies:
     "@remix-run/router" "1.7.1"
     react-router "6.14.1"
+
+react-router@^6.22.3:
+  version "6.22.3"
+  resolved "https://registry.npmjs.org/react-router/-/react-router-6.22.3.tgz"
+  integrity sha512-dr2eb3Mj5zK2YISHK++foM9w4eBnO23eKnZEDs7c880P6oKbrjz/Svg9+nxqtHQK+oMW4OtjZca0RqPglXxguQ==
+  dependencies:
+    "@remix-run/router" "1.15.3"
 
 react-router@6.14.1:
   version "6.14.1"

@@ -38,7 +38,6 @@ const isMeName = partner => {
 const DialogItem = ({ 
   id, 
   isMe, 
-  onSelect, 
   currentDialogId, 
   partner, 
   lastMessage 
@@ -48,7 +47,6 @@ const DialogItem = ({
     'dialogs__item--online': false,
     'dialogs__item--selected': currentDialogId === id
   })}
-    onClick={() => onSelect(id)}
   >
     <div className='dialogs__item-avatar'>
       <Avatar user={partner} />
@@ -60,21 +58,19 @@ const DialogItem = ({
           {getMessageTime(lastMessage.created_at)}
         </span>
       </div>
-      <div className="dialogs__item-info-bottom">
+    <div className="dialogs__item-info-bottom">
 
-      {lastMessage.title && (<p>
+    {lastMessage.title && (<p>
               {reactStringReplace(lastMessage.title, /:(.+?):/g, (match,i) => (
                 <em-emoji id={match} set="apple"></em-emoji>
-              ))}</p> )}
-
-        {/*<p>
-          {lastMessage.title}
-        </p>*/}
-        {isMe && <IconReaded isMe />}
-        {lastMessage.unread > 0 &&
+              ))}
+              </p>
+      )}
+        {isMe && <IconReaded isMe isReaded={lastMessage.readed} />}
+        {/*lastMessage.readed > 0 &&
           <div className="dialogs__item-info-bottom-count">
-            {lastMessage.unread > 9 ? "+9" : lastMessage.unread}
-          </div>}
+            {lastMessage.readed > 9 ? "+9" : lastMessage.readed}
+    </div>*/}
 
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import './App.scss';
 import Home from './components/home/Home';
 import Login from './components/auth/login/Login';
@@ -15,7 +16,6 @@ import Receipts from './components/socialmedia/receipts/Receipts';
 
 const App = (props: any) => {
 const { isAuth } = props;
-
     return (
       <div className="App">
         <Navbar/>

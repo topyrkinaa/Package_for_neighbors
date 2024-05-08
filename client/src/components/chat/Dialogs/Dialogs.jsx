@@ -15,8 +15,7 @@ const Dialogs = ({
   items, 
   userId, 
   onSearch, 
-  inputValue, 
-  onSelectDialog, 
+  inputValue,  
   currentDialogId 
 }) => (
     <div className="dialogs">
@@ -33,7 +32,6 @@ const Dialogs = ({
         <DialogItem  
         key={item.id} 
         isMe={item.author.id === userId} 
-        onSelect ={onSelectDialog}
         currentDialogId={currentDialogId}
         {...item} 
         />
