@@ -1,50 +1,44 @@
 const db = require('../db');
 
 class UploadController {
-
+    constructor(io) {
+        this.io = io;
+    }
+    io;
     
     async create(req, res) {
-        try {   
-            console.log('мы тут')
-            const email = req.user.data // получаем email по токену
-            const user = await db.query(`SELECT * FROM users WHERE email = '${email}' `)
-
-            console.log(user);
+        try {  
 
             const file = req.file;
-        
-
             const fileData = {
                 filename: file.originalname,
                 size: file.size,
                 ext: file.mimetype,
-                url: file.url,
-                user: user.rows[0].id,
+                path: "https://i.pinimg.com/564x/37/a0/e8/37a0e8b8acda2dcabf3366e47767a8b2.jpg",
                 created_at: new Date()
             };
 
             const newFile = await db.query(
-                'INSERT INTO uploadfile (authorid, filename, size, ext, url) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-                [fileData.user, fileData.filename, filename.size, fileData.ext, fileData.url]
+                'INSERT INTO uploadfile ( filename, size, ext, url, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                [ fileData.filename, fileData.size, fileData.ext, fileData.path, fileData.created_at]
             );
 
-            res.json({
+
+            console.log({
                 id: newFile.rows[0].id,
-                authorid: newFile.rows[0].authorid,
                 filename: newFile.rows[0].filename,
                 size: newFile.rows[0].size,
                 ext: newFile.rows[0].ext,
-                url:  newFile.rows[0].url
-            });
-
-
+                url:  newFile.rows[0].url,
+                created_at: newFile.rows[0].created_at,
+            })
             return res.json({
                 id: newFile.rows[0].id,
-                authorid: newFile.rows[0].authorid,
                 filename: newFile.rows[0].filename,
                 size: newFile.rows[0].size,
                 ext: newFile.rows[0].ext,
-                url:  newFile.rows[0].url
+                url:  newFile.rows[0].url,
+                created_at: newFile.rows[0].created_at,
             });
 
     } catch (error) {

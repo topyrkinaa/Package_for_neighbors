@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from 'react-redux';
 import { Empty } from 'antd';
 import PropTypes from "prop-types";
@@ -20,6 +20,8 @@ const Dialogs = ({
     if (!currentDialogId) {
         return <Empty description="Начните диалог" />;
     }
+
+    const [previewImage, setPreviewImage ] = useState(null);
 
     const messagesRef = useRef(null);
 
@@ -48,7 +50,9 @@ const Dialogs = ({
         blockRef={messagesRef} 
         items={items} 
         isLoading={isLoading && !user} 
-        onRemoveMessage={removeMessageById}/>
+        onRemoveMessage={removeMessageById}
+        setPreviewImage={setPreviewImage}
+        previewImage={previewImage}/>
     );
 };
 

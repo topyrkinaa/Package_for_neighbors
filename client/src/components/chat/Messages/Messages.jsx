@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Empty, Spin } from 'antd';
+import { Empty, Spin, Modal } from 'antd';
 import classNames from "classnames";
 
 import Message from "../message/Message";
 import './Messages.scss';
 
-const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
+const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user, setPreviewImage, previewImage }) => {
 
     return (
     <div className="chat__dialog-messages" 
@@ -25,13 +25,22 @@ const Messages = ({ onRemoveMessage, blockRef, isLoading, items, user }) => {
                 {...item} 
                 isMe={
                     user && user.id === item.user.id} 
-                onRemoveMessage={onRemoveMessage.bind(this, item.id)}/>)
+                onRemoveMessage={onRemoveMessage.bind(this, item.id)}
+                setPreviewImage={setPreviewImage}
+                />)
             ) : ( 
             <Empty description="Диалог пуст" /> 
             )
             ) : (
             <Empty description="Начните диалог" />   
         )}
+        <Modal
+            open={!!previewImage} 
+            onCancel={() => setPreviewImage(null)} 
+            footer={null}
+            >
+                <img src={previewImage} style={{ width:'100%'}} alt="Preview" />
+        </Modal>
     </div>
     </div>
     );

@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
-import { SmileOutlined,CameraOutlined, AudioOutlined, SendOutlined } from '@ant-design/icons';
+import { SmileOutlined,CameraOutlined, AudioOutlined, SendOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { Input, Button } from 'antd';
 import Upload from 'rc-upload';
 import data from '@emoji-mart/data';
@@ -21,8 +21,12 @@ const Chatinput = props => {
         sendMessage,
         handleSendMessage,
         attachments,
-        onSelectFiles
+        onSelectFiles,
+        isRecording,
+        onRecord,
+        onStopRecording
     } = props;
+
 
 
     return (
@@ -41,13 +45,30 @@ const Chatinput = props => {
         </div>
             <Button onClick={toggleEmojiPicker} type="ghost" shape="circle" icon={<SmileOutlined />} />
         </div>
-            <TextArea 
-                onChange={e => setValue(e.target.value)} 
-                onKeyUp={handleSendMessage}
-                size="large" 
-                placeholder='Введите текст сообщения...'
-                value={value}
-                autoSize={{minRows: 1, maxRows: 6}}/>
+                {
+                    isRecording ? (
+                    <div className="chat-input__record-status">
+                        <i className="chat-input__record-status-bubble"></i>
+                        Запись...
+                        <Button 
+                            onClick={onStopRecording} 
+                            type="ghost" 
+                            shape="circle" 
+                            icon={<CloseCircleOutlined />} 
+                            className="stop-recording"
+                            />
+                    </div>
+                ) : (
+                    <TextArea 
+                        onChange={e => setValue(e.target.value)} 
+                        onKeyUp={handleSendMessage}
+                        size="large" 
+                        placeholder='Введите текст сообщения...'
+                        value={value}
+                        autoSize={{minRows: 1, maxRows: 6}}/>
+
+                )}
+            
            
                 <div className="chat-input__actions">
                     <Upload 
@@ -60,10 +81,23 @@ const Chatinput = props => {
                             icon={<CameraOutlined />}
                         />
                     </Upload>
-                    {   value ? 
-                    <Button type="ghost" shape="circle" icon={<SendOutlined />} onClick={sendMessage} />
-                    :  <Button type="ghost" shape="circle" icon={<AudioOutlined />} /> 
-                    }
+                    {  isRecording || value || attachments.length ? (
+                        <Button 
+                            type="ghost" 
+                            shape="circle" 
+                            icon={<SendOutlined />} 
+                            onClick={sendMessage} 
+                        />
+                    ) : ( 
+                        <div className="chat-input__record-btn">
+                            <Button 
+                                onClick={onRecord} 
+                                type="ghost" 
+                                shape="circle" 
+                                icon={<AudioOutlined />} 
+                                />
+                        </div> 
+                    )}
                 </div>
         </div>
                 <div className="chat-input__attachments">

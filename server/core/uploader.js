@@ -8,7 +8,6 @@ v2.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-
 const storage = new CloudinaryStorage({
     cloudinary: v2,
     params: {
@@ -17,6 +16,11 @@ const storage = new CloudinaryStorage({
         transformation: [{ width: 500, height: 500, crop: 'limit' }]
     }
 });
+
+v2.uploader.upload("/", {upload_preset: "my_preset"}, (error, result)=>{
+    console.log(result, error);
+  });
+
 
 const parser = multer({ storage });
 

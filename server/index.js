@@ -1,6 +1,7 @@
 const express = require('express')
 const dotenv = require('dotenv')
 const {createServer} = require('http')
+const path = require('path')
 
 dotenv.config()
 
@@ -23,7 +24,8 @@ const io = createSocket(http);
 app.use(corsMiddlecare)
 app.use(authMiddlecare)
 //app.use(updateLastSeen)
-app.use(express.json())       
+app.use(express.json())  
+app.use('/images', express.static(path.join(__dirname, 'images')))     
 
 
 const start =  async () => {
@@ -31,7 +33,7 @@ const start =  async () => {
         app.use('/api/auth', userRouter(io))
         app.use('/api/chat', dialogRouter(io))
         app.use('/api/chat', messageRouter(io))
-        app.use('/api', uploadRouter())
+        app.use('/api', uploadRouter(io))
         
 
         /*io.on('connection', function(socket) {

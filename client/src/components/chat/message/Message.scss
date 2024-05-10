@@ -2,6 +2,8 @@
 
 .message {
 
+  padding-bottom: 10px;
+
     $self: &;
 
     &__content {
@@ -43,6 +45,9 @@
         font-size: 12px;
         font-family: 'Comfortaa';
         opacity: 0.5;
+        position: absolute;
+        left: 45px;
+        bottom: -15px;
     }
 
     &__text {
@@ -56,12 +61,41 @@
       display: flex;
       margin-bottom: 5px;
       order: 1;
+
       &-item {
+        $item: &;
         margin-right: 5px;
         cursor: pointer;
+        position: relative;
         img {
           width: 45px;
           height: 45px;
+          border-radius: 8px;
+        }
+        
+        &:hover {
+          #{$item}-overlay {
+            opacity: 1;
+          } 
+        }
+
+        .anticon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+      }
+
+        &-overlay {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 96.6%;
+          background: rgba(0,0,0, 0.3);
+          opacity: 0;
+          transition: opasity 0.15s ease-in-out;         
           border-radius: 8px;
         }
       }
@@ -166,9 +200,6 @@
       .avatar {
         margin-left: 13px;
         margin-right: 0;
-
- 
-
       }
 
         #{$self}__content {
@@ -177,6 +208,10 @@
           flex-direction: row-reverse;
         }
     
+        #{$self}__date {
+          left: 0;
+          right: 45px;
+      }
         #{$self}__avatar {
           img {
             margin-right: 0;

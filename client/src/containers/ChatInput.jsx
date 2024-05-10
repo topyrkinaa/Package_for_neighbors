@@ -6,6 +6,7 @@ import messagesActions from '../reducers/actions/messages';
 import filesAPI from '../core/files';
 import BaseChatInput from '../components/chat/Chatinput/Chatinput';
 import { CodeSandboxCircleFilled } from '@ant-design/icons';
+import { set } from 'date-fns';
 
 
 const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
@@ -14,13 +15,51 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
         return null;
     }
 
+
+    window.navigator.getUserMedia = (window.navigator.getUserMedia ||
+        window.navigator.mozGetUserMedia ||
+        window.navigator.msGetUserMedia ||
+        window.navigator.webkitGetUserMedia);
+
+
     const [value, setValue] = useState("");
-    const [attachments, setAttachments] = useState([0]);
+    const [isRecording, setIsRecording] = useState(false);
+    const [attachments, setAttachments] = useState([]);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
     const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
 
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!emojiPickerVisible);
     };
+
+    const onRecord = () => {
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({  audio : true }, onRecording, onError);
+        }
+    }
+
+    const onRecording = (stream) => {
+        const recorder = new MediaRecorder(stream);
+        setMediaRecorder(recorder);
+        recorder.start();
+
+        recorder.onstart = () => {
+            setIsRecording(true);
+        }
+
+        recorder.onstop = () => {
+            setIsRecording(false);
+        }
+
+        recorder.ondataavailable = function(e) {
+            const audioURL = window.URL.createObjectURL(e.data);
+            new Audio(audioURL).play();
+        }
+    }
+
+    const onError = (err) => {
+        console.log('The following error occured: ' + err);
+    }
 
     const handleOutsideClick = (el, e) => {
         if (el && !el.contains(e.target)) {
@@ -29,43 +68,38 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
     }
 
 
-    const onUpload = (file, uid) => {
-        filesAPI.upload(file).then(({ data }) => {
-            setAttachments(
-                attachments.map(item => {
-                if (item.uid === uid) {
-                    item = {
-                        uid: data.file.id,
-                        name: data.file.filename,
-                        status: 'done',
-                        url: data.file.url
-                    };
-                }
-                return item;
-            }));
-        });
+
+    const onStopRecording = () => {
+        mediaRecorder.stop();
     }
 
-
-    const onSelectFiles = file => {
+    const onSelectFiles = async file => {
         let uploaded = []
-        console.log(file)
-        const uid =  Math.round(Math.random() * 1000);
-        uploaded.push({
-            uid,
-            file,
-            name: file.name,
-            status: "uploading"
-          });
+            uploaded = [
+            ...uploaded,
+            {
+                file,
+                name: file.name,
+                status: "uploading"
+            }
+        ];
         setAttachments(uploaded);
-        uploaded.forEach( item => {
-            onUpload(item.file, item.uid);
+        await filesAPI.upload(file).then(({ data }) => {
+                    return uploaded =[{
+                        status: 'done',
+                        uid: data.id,
+                        name: data.filename,
+                        url: data.url
+                    }];
         });
-    }
+        console.log(uploaded)
+        setAttachments(uploaded);
+    };
 
     const sendMessage = () => {
-        fetchSendMessage(value, currentDialogId);
+        fetchSendMessage(value, currentDialogId, attachments.map(file => file.uid));
         setValue("");
+        setAttachments([]);
     }
 
     const addEmoji = ({ id }) => {
@@ -98,6 +132,9 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
     sendMessage ={sendMessage} 
     attachments = {attachments}
     onSelectFiles = {onSelectFiles}
+    isRecording = {isRecording}
+    onRecord = {onRecord}
+    onStopRecording = {onStopRecording}
     />
 }
 

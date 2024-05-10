@@ -3,11 +3,12 @@ const router = new Router();
 const UploadController = require('../controller/upload.controller');
 const uploader = require('../core/uploader');
 
-const uploadRouter = () => {
+const fileMiddleware = require('../middleware/file.middleware')
 
-    const UploadCtr = new UploadController();
+const uploadRouter = (io) => {
+    const UploadCtr = new UploadController(io);
 
-    router.post("/files", uploader.single("file"), UploadCtr.create);
+    router.post("/files", fileMiddleware.single("image"), UploadCtr.create);
     router.delete("/files", UploadCtr.delete);
 
     return router;
