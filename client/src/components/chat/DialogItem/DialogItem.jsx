@@ -38,18 +38,16 @@ const isMeName = partner => {
 
 const renderLastMessage = (message, userId) => {
   let text = '';
-  console.log(message);
   if (!message.title && message.attachments.length > 0) {
     text = 'прикрепленный файл';
   } else {
     text = message.title;
   }
 
-    return reactStringReplace( message.authorid === userId 
-      ? `Вы: ${text}` 
-      : `${text}`, /:(.+?):/g, (match,i) => (
-      <em-emoji id={match} set="apple"></em-emoji>
-    ))
+    return (reactStringReplace((message.authorid === userId 
+      ? `Вы  ${text}`: `${text}`), /:(.+?):/g, (match,i) => (
+        <em-emoji id={match} set="apple"></em-emoji>
+    )))
 }
 
 const DialogItem = ({ 

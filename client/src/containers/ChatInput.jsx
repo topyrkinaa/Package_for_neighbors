@@ -91,6 +91,7 @@ const ChatInput = (props) => {
     };
 
     const onSelectFiles = async file => {
+        console.log(file);
         let uploaded = []
             uploaded = [
             ...uploaded,
@@ -131,6 +132,13 @@ const ChatInput = (props) => {
                 attachments: attachments.map(file => file.uid)});
             setValue("");
             setAttachments([]);
+        } else if (!value && attachments.length) {
+            fetchSendMessage({
+                text: value,
+                dialogid: currentDialogId,
+                attachments: attachments.map(file => file.uid)});
+                setValue("");
+                setAttachments([]);
         }
     };
 

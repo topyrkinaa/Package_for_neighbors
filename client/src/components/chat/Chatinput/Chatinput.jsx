@@ -38,7 +38,7 @@ const Chatinput = props => {
         <div className="chat-input__emoji-picker"> {emojiPickerVisible && (
                 <Picker 
                     data ={data}
-                    set="apple"
+                    set="native"
                     onEmojiSelect = {(emojiTag) => addEmoji(emojiTag)}
                     
                 />

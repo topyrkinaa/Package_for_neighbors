@@ -41,7 +41,7 @@ const Dialogs = ({
     };
 
     useEffect(() => {
-        socket.on('DIALOGS:TYPING', toggleIsTyping)
+       // socket.on('DIALOGS:TYPING', toggleIsTyping)
         
     },[]);
 
