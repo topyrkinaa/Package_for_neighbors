@@ -10,7 +10,7 @@ import Chatinput from '../../containers/ChatInput';
 import "./HomeChat.scss";
 
 const HomeChat = (props) => {
-  const {setCurrentDialogId} = props;
+  const {setCurrentDialogId, user} = props;
 
   useEffect(() => {
     const { location: { pathname } } = props;
@@ -21,19 +21,22 @@ const HomeChat = (props) => {
       setCurrentDialogId('');
     }
 
-  }, [props.location.pathname])
+  }, [props.location.pathname]);
+
+  const userToken = localStorage.token;
+  
   return (
     <section className="home">
       
       <div className="chat">
         <Sidebar />
-          <div className="chat__dialog"> 
+          { user && (<div className="chat__dialog"> 
               <Status online/>
               <Messages />
             <div className="chat__dialog-input">
             <Chatinput />
             </div>
-        </div>
+        </div>)}
       </div>
     </section> 
     
@@ -41,4 +44,8 @@ const HomeChat = (props) => {
   );
 }
 
-export default withRouter(connect(({ dialogs }) => dialogs, dialogsActions)(HomeChat));
+export default withRouter(connect(
+    ({ user }) => ({ user: user.data}), 
+    dialogsActions
+  )(HomeChat)
+);

@@ -1,10 +1,11 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
-import { SmileOutlined,CameraOutlined, AudioOutlined, SendOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { SmileOutlined,CameraOutlined, AudioOutlined, SendOutlined, CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Input, Button } from 'antd';
 import Upload from 'rc-upload';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+
 
 import './Chatinput.scss';
 import UploadFiles from '../UploadFiles/UploadFiles';
@@ -18,16 +19,16 @@ const Chatinput = props => {
         setValue, 
         value,
         addEmoji,
-        sendMessage,
         handleSendMessage,
+        sendMessage,
         attachments,
         onSelectFiles,
         isRecording,
         onRecord,
-        onStopRecording
+        onHideRecording,
+        isLoading,
+        removeAttachments
     } = props;
-
-
 
     return (
         <Fragment>
@@ -51,7 +52,7 @@ const Chatinput = props => {
                         <i className="chat-input__record-status-bubble"></i>
                         Запись...
                         <Button 
-                            onClick={onStopRecording} 
+                            onClick={onHideRecording} 
                             type="ghost" 
                             shape="circle" 
                             icon={<CloseCircleOutlined />} 
@@ -74,14 +75,18 @@ const Chatinput = props => {
                     <Upload 
                     data={onSelectFiles}
                     name='chat-input__actions-uplpad-btn' 
-                    accept='.jpg,.jpeg,,.png,.gif,.bmp' multiple={true}>
+                    accept='.jpg, .jpeg, .png, .gif, .bmp' multiple={true}>
                         <Button 
                             type="ghost" 
                             shape="circle" 
                             icon={<CameraOutlined />}
                         />
                     </Upload>
-                    {  isRecording || value || attachments.length ? (
+                    {  isLoading ? <Button 
+                            type="ghost" 
+                            shape="circle" 
+                            icon={<LoadingOutlined />} 
+                        /> : (isRecording || value || attachments.length) ? (
                         <Button 
                             type="ghost" 
                             shape="circle" 
@@ -100,9 +105,10 @@ const Chatinput = props => {
                     )}
                 </div>
         </div>
+                { attachments.length > 0 && (
                 <div className="chat-input__attachments">
-              <UploadFiles attachments={attachments} />
-            </div>
+              <UploadFiles removeAttachments={removeAttachments} attachments={attachments} />
+            </div>)}
             </div>
            
         </Fragment>

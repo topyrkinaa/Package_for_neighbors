@@ -22,12 +22,36 @@ const Dialogs = ({
     }
 
     const [previewImage, setPreviewImage ] = useState(null);
+    const [blockHeigth, setBlockHeigth ] = useState(140);
+    const [isTyping, setIsTyping ] = useState(false);
+    const typingTimeoutId = null;
 
     const messagesRef = useRef(null);
 
     const onNewMessage = data => {
         addMessage(data);
     };
+
+    const toggleIsTyping = () => {
+        setIsTyping(true);
+        clearInterval(typingTimeoutId);
+        typingTimeoutId = setTimeout(() => {
+            setIsTyping(false);
+        }, 3000);
+    };
+
+    useEffect(() => {
+        socket.on('DIALOGS:TYPING', toggleIsTyping)
+        
+    },[]);
+
+    useEffect(() => {
+        if (attachments.length) {
+            setBlockHeigth(245);
+        } else {
+            setBlockHeigth(140);
+        }
+    }, [attachments]);
 
     useEffect(() => {
         if (currentDialogId) {
@@ -43,7 +67,6 @@ const Dialogs = ({
         messagesRef.current.scrollTo(0, 999999);
     }, [items]);
 
-
     return (
         <BaseMessages 
         user={user} 
@@ -52,7 +75,9 @@ const Dialogs = ({
         isLoading={isLoading && !user} 
         onRemoveMessage={removeMessageById}
         setPreviewImage={setPreviewImage}
-        previewImage={previewImage}/>
+        previewImage={previewImage}
+        blockHeigth={blockHeigth}
+        isTyping={isTyping}/>
     );
 };
 

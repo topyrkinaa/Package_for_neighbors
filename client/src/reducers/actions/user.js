@@ -13,7 +13,6 @@ const Actions = {
       fetchUserData: () => dispatch => {
         userAPI.getMe().then(response => {
           dispatch(Actions.setUserData(response.data));
-          //TODO доделать catch
         }).catch( err =>{
           if (err.status === 403) {
             dispatch(Actions.setIsAuth(false));

@@ -7,12 +7,11 @@ import { Popover, Button } from 'antd';
 import { EllipsisOutlined, EyeOutlined } from '@ant-design/icons';
 import reactStringReplace from 'react-string-replace';
 
+import { convertCurrentTime, isAudio } from '../../../utils/helpers';
 
-import { convertCurrentTime } from '../../../utils/helpers';
 import waveSvg from "../../../assets/img/wave.svg";
 import pauseSvg from "../../../assets/img/pause.svg";
 import playSvg from "../../../assets/img/play.svg";
-
 
 import "./Message.scss";
 import IconReaded from '../IconReaded/IconReaded';
@@ -98,7 +97,6 @@ const MessageAudio = ({ audioSrc }) => {
   );
 };
 
-
 const Message = ({ 
   user, 
   text, 
@@ -110,12 +108,33 @@ const Message = ({
   onRemoveMessage,
   setPreviewImage
 }) => {
+
+  const renderAttachment = item => {
+    if(item.ext != 'webm') {
+      return (
+        <div onClick={() => setPreviewImage(item.url)} key={item.id} className="message__attachments-item">
+          <div className='message__attachments-item-overlay' >
+            <EyeOutlined style={{ color : 'white', fontSize: 18 }} />
+          </div> 
+          
+          <img src={item.url} alt={item.filename} />
+        </div>
+      )
+    } else {
+      return <MessageAudio key={item.id} audioSrc={item.url}/>
+    }
+  };
+
+
+
+
   return (
   <div className={ClassNames('message', { 
     'message--isme': isMe, 
     'message--is-typing': isTyping,
-    'message--is-audio': false,
-    'message--image': attachments && attachments.length === 1 && !text
+    'message--is-audio': isAudio(attachments),
+    'message--image': 
+      !isAudio(attachments) && attachments && attachments.length === 1 && !text
     })}>
     <div className='message__content'>
     <Popover
@@ -135,9 +154,9 @@ const Message = ({
         <Avatar user={user} />
       </div>
       <div className="message__info">
-      { text && (
+      { (text || isTyping) && (
           <div className="message__bubble">
-            {text && (<p className="message__text">
+            {text  && (<p className="message__text">
               {reactStringReplace(text, /:(.+?):/g, (match,i) => (
                 <em-emoji id={match} set="apple"></em-emoji>
               ))}</p> )}
@@ -154,15 +173,7 @@ const Message = ({
           
           { attachments && (
             <div className="message__attachments">
-           {attachments.map((item, index) => (
-            <div onClick={() => setPreviewImage(item.url)} key={index} className="message__attachments-item">
-              <div className='message__attachments-item-overlay' >
-                <EyeOutlined style={{ color : 'white', fontSize: 18 }} />
-              </div> 
-              
-              <img src={item.url} alt={item.filename} />
-            </div>
-          ))}
+           {attachments.map((item, index) => renderAttachment(item))}
           </div>
           )}
       </div>

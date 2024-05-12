@@ -3,13 +3,24 @@ import React, {useEffect, useState} from 'react';
 import { connect } from 'react-redux';
 
 import messagesActions from '../reducers/actions/messages';
+import attachmentsActions from '../reducers/actions/attachments';
 import filesAPI from '../core/files';
 import BaseChatInput from '../components/chat/Chatinput/Chatinput';
 import { CodeSandboxCircleFilled } from '@ant-design/icons';
 import { set } from 'date-fns';
 
+import socket from '../core/socket';
 
-const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
+
+const ChatInput = (props) => {
+    const { 
+        dialogs: { currentDialogId }, 
+        attachments,
+        fetchSendMessage,
+        setAttachments, 
+        removeAttachments,
+        user
+    } = props;
 
     if (!currentDialogId) {
         return null;
@@ -24,9 +35,9 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
 
     const [value, setValue] = useState("");
     const [isRecording, setIsRecording] = useState(false);
-    const [attachments, setAttachments] = useState([]);
     const [mediaRecorder, setMediaRecorder] = useState(null);
     const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
+    const [isLoading, setLoading] = useState(false);
 
     const toggleEmojiPicker = () => {
         setShowEmojiPicker(!emojiPickerVisible);
@@ -51,9 +62,16 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
             setIsRecording(false);
         }
 
-        recorder.ondataavailable = function(e) {
-            const audioURL = window.URL.createObjectURL(e.data);
-            new Audio(audioURL).play();
+        recorder.ondataavailable = e => {
+            //const audioURL = window.URL.createObjectURL(e.data);
+            //new Audio(audioURL).play();
+            const file = new File([e.data], "audio.webm");
+            setLoading(true);
+            filesAPI.upload(file).then(({ data }) => {
+                sendAudio(data.id).then(() => {
+                    setLoading(false);
+                });
+            });
         }
     }
 
@@ -68,10 +86,9 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
     }
 
 
-
-    const onStopRecording = () => {
-        mediaRecorder.stop();
-    }
+    const onHideRecording = () => {
+        setIsRecording(false);
+    };
 
     const onSelectFiles = async file => {
         let uploaded = []
@@ -92,21 +109,37 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
                         url: data.url
                     }];
         });
-        console.log(uploaded)
         setAttachments(uploaded);
     };
 
+
+    const sendAudio = audioId => {
+        return fetchSendMessage({
+            text: null,
+            dialogid: currentDialogId,
+            attachments: [audioId]
+        });
+    };
+
     const sendMessage = () => {
-        fetchSendMessage(value, currentDialogId, attachments.map(file => file.uid));
-        setValue("");
-        setAttachments([]);
-    }
+        if (isRecording) {
+            mediaRecorder.stop();
+        } else if (value) {
+            fetchSendMessage({
+                text: value,
+                dialogid: currentDialogId,
+                attachments: attachments.map(file => file.uid)});
+            setValue("");
+            setAttachments([]);
+        }
+    };
 
     const addEmoji = ({ id }) => {
         setValue((value + ' ' + ':' + id + ':').trim());
-    } 
+    };
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = e => {
+        socket.emit('DIALOGS:TYPING',{dialogId: currentDialogId, user });
         if (e.keyCode === 13) {
             sendMessage();
         }
@@ -134,11 +167,13 @@ const ChatInput = ({ fetchSendMessage, currentDialogId }) => {
     onSelectFiles = {onSelectFiles}
     isRecording = {isRecording}
     onRecord = {onRecord}
-    onStopRecording = {onStopRecording}
+    onHideRecording = {onHideRecording}
+    isLoading = {isLoading}
+    removeAttachments = {removeAttachments}
     />
 }
 
 export default connect(
-    ({ dialogs }) => dialogs,
-    messagesActions 
+    ({ dialogs, attachments, user }) => ({dialogs, attachments: attachments.items, user: user.data}),
+    {...messagesActions, ...attachmentsActions} 
 )(ChatInput);

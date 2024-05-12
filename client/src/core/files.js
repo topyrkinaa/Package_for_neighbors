@@ -4,7 +4,7 @@ const filesAPI = {
 
     upload: file => {
       const formData = new FormData();
-      formData.append('image', file);
+      formData.append('file', file);
       return axios.post("/api/files", formData, {
         headers: {
           "Content-Type": "multipart/form-data"

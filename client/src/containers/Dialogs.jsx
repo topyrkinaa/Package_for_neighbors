@@ -7,7 +7,7 @@ import BaseDialogs from '../components/chat/Dialogs/Dialogs';
 import socket from '../core/socket';
 
 
-// Функция для преобразования строковых дат в объекты Date
+/* Функция для преобразования строковых дат в объекты Date
 const parseDates = (data) => {
   return JSON.parse(data, (key, value) => {
     if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value)) {
@@ -16,6 +16,7 @@ const parseDates = (data) => {
     return value;
   });
 };
+*/
 
 
 const Dialogs = ({ 
@@ -69,7 +70,7 @@ const Dialogs = ({
 
 Dialogs.propTypes = {
     items: PropTypes.array.isRequired,
-    userId: PropTypes.any.isRequired,
+    userId: PropTypes.any,
     inputValue: PropTypes.any,
     сurrentDialogId: PropTypes.any
     

@@ -3,10 +3,11 @@ import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import isToday from 'date-fns/isToday';
-import { Link } from 'react-router-dom';
+import { Link, parsePath } from 'react-router-dom';
 import reactStringReplace from 'react-string-replace';
 
 import IconReaded from '../IconReaded/IconReaded';
+import { isAudio } from '../../../utils/helpers';
 import './DialogItem.scss';
 import Avatar from '../Avatar/Avatar';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
@@ -35,16 +36,33 @@ const isMeName = partner => {
     }
   }
 
+const renderLastMessage = (message, userId) => {
+  let text = '';
+  console.log(message);
+  if (!message.title && message.attachments.length > 0) {
+    text = 'прикрепленный файл';
+  } else {
+    text = message.title;
+  }
+
+    return reactStringReplace( message.authorid === userId 
+      ? `Вы: ${text}` 
+      : `${text}`, /:(.+?):/g, (match,i) => (
+      <em-emoji id={match} set="apple"></em-emoji>
+    ))
+}
+
 const DialogItem = ({ 
   id, 
   isMe, 
   currentDialogId, 
   partner, 
-  lastMessage 
-}) => (
+  lastMessage,
+  userId
+}) =>  (
   <Link to={`/chat/${id}`} style={{ textDecoration: 'none' }}>
   <div className={ClassNames('dialogs__item', {
-    'dialogs__item--online': false,
+    'dialogs__item--online': partner.isOnline,
     'dialogs__item--selected': currentDialogId === id
   })}
   >
@@ -59,18 +77,14 @@ const DialogItem = ({
         </span>
       </div>
     <div className="dialogs__item-info-bottom">
-
-    {lastMessage.title && (<p>
-              {reactStringReplace(lastMessage.title, /:(.+?):/g, (match,i) => (
-                <em-emoji id={match} set="apple"></em-emoji>
-              ))}
+    <p>
+              { renderLastMessage( lastMessage, userId) }
               </p>
-      )}
         {isMe && <IconReaded isMe isReaded={lastMessage.readed} />}
-        {/*lastMessage.readed > 0 &&
+        {(lastMessage.authorid != userId && !lastMessage.readed) &&
           <div className="dialogs__item-info-bottom-count">
-            {lastMessage.readed > 9 ? "+9" : lastMessage.readed}
-    </div>*/}
+              {lastMessage.readed}
+          </div>}
 
       </div>
     </div>
