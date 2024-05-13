@@ -77,8 +77,21 @@ class UserController {
 
     updateUser = async (req,res) => {
       try {
-        const { id, email, username, surname, patronymic, password } = req.body
-        const users = await db.query(`UPDATE users set email = '${email}', username = '${username}', surname = '${surname}', patronymic = '${patronymic}', password = '${password}' where id = '${id}' RETURNING * `)
+        const email = req.user.data // получаем email по токену
+        const user = await db.query(`SELECT * FROM users WHERE email = '${email}' `)
+        let { telephone, roommates, avatar } = req.body
+
+        if (telephone == null) {
+          telephone = user.rows[0].telephone
+        } 
+        if (roommates == null) {
+          roommates = user.rows[0].roommates
+        } 
+        if (avatar == null) {
+          avatar = user.rows[0].avatar
+        }
+
+        const users = await db.query(`UPDATE users set telephone = '${telephone}', roommates = '${roommates}', avatar = '${avatar}' where id = '${user.rows[0].id}' RETURNING * `)
         res.json(users.rows[0])
       } catch (error) {
         console.error(error)

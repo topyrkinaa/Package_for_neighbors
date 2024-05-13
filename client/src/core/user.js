@@ -6,5 +6,10 @@ export default {
     register: postData => axios.post("/api/auth/register", postData),
     getMe: () => axios.get("/api/auth/me"),
     findUser: qwery => axios.get("/api/auth/find?qwery=" + qwery),
-    
+    updateInfoUser: (telephone, roommates, attachments) => 
+        axios.put("/api/auth/update", {
+            "telephone": telephone,
+            "roommates": roommates,
+            "avatar": attachments
+        })
 };

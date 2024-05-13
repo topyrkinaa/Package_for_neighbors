@@ -20,6 +20,16 @@ const Actions = {
           }
         });
       },
+      // Алина писала сама
+      fetchUserLogout: () => dispatch => {
+        dispatch(Actions.setIsAuth(false));
+        delete window.localStorage.token;
+        delete window.axios.defaults.headers.common['token'];
+        dispatch(Actions.setUserData({}));
+      },
+      fetchUpdateInfoUser: ( {telephone,roommates, attachments} ) => dispatch => {
+        return userAPI.updateInfoUser(telephone,roommates, attachments);
+     },
       fetchUserLogin: postData => dispatch => {        
         return userAPI.login(postData).then(({data}) => {
           const { status, token } = data;

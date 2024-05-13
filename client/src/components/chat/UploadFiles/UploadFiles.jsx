@@ -29,23 +29,6 @@ const getBase64 = (file) =>
 
     const handleCancel = () => setState({...state, previewVisible: false });
 
-    const handlePreview = async (file) => {
-      if (!file.url && !file.preview) {
-        file.preview = await getBase64(file.originFileObj);
-      }
-
-      setState({
-        ...state, 
-        previewVisible: file.url || file.preview ,
-        previewVisible: true
-      });
-    };
-
-    const handleChange = ({ fileList }) => 
-    setState({
-      ...state,
-      fileList 
-    });
 
 
     return (

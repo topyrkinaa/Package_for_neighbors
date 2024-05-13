@@ -4,6 +4,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Colors from '../../utils/colors';
+import store from '../../store/store';
+import Actions from '../../reducers/actions/user';
 
 interface Props {
   window?: () => Window;
@@ -36,7 +38,31 @@ const whiteTheme = createTheme({
   },
 });
 
+const userToken = localStorage.token
+
+const UserLogout = () => {
+  store.dispatch(Actions.fetchUserLogout());
+  
+};
+
+const dummyOnClick = () => {}; 
+
+
+const isTokenAuth = (userToken: any) => {
+  if (userToken) {
+    return [
+      { text: 'Выйти', route: '/', onClick: UserLogout },
+    ];
+  } else {
+    return [
+      { text: 'Войти', route: 'login', onClick: dummyOnClick },
+      { text: 'Регистрация', route: 'register', onClick: dummyOnClick },
+    ];
+  }
+};
+
 const drawerWidth = 240;
+
 const navItems = [
   { text: 'Войти', route: 'login' },
   { text: 'Регистрация', route: 'register' },
@@ -106,8 +132,8 @@ export default function DrawerAppBar(props: Props) {
               вДоме
             </Typography>
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {navItems.map((item) => (
-                <Link key={item.text} to={item.route}>
+              {isTokenAuth(userToken).map((item) => (
+                <Link key={item.text} to={item.route} onClick={item.onClick} >
                   <Button
                     key={item.text}
                     sx={{

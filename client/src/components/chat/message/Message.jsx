@@ -116,7 +116,6 @@ const Message = ({
           <div className='message__attachments-item-overlay' >
             <EyeOutlined style={{ color : 'white', fontSize: 18 }} />
           </div> 
-          
           <img src={item.url} alt={item.filename} />
         </div>
       )

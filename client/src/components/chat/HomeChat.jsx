@@ -22,8 +22,6 @@ const HomeChat = (props) => {
     }
 
   }, [props.location.pathname]);
-
-  const userToken = localStorage.token;
   
   return (
     <section className="home">

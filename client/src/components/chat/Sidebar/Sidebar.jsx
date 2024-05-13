@@ -46,7 +46,7 @@ const Sidebar = ({
             open={visible} 
             footer={[
               <Button 
-                key="back" 
+                type="dashed"
                 onClick={onClose}>
                   Закрыть
                 </Button>,

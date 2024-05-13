@@ -104,7 +104,6 @@ const DialogItem = ({
     text: PropTypes.string,
     unreaded: PropTypes.number,
     created_at: PropTypes.instanceOf(Date)
-
   };
   
 

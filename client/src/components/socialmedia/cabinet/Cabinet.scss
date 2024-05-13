@@ -11,13 +11,36 @@
     font-family: 'Comfortaa';
     width: 400px;
 
+    &-item {
+      display: flex;
+      flex-direction: row;
+    }
+
+    &-text {
+      font-family: "Comfortaa";
+      font-size: 11px;
+      font-weight: 700;
+      opacity: 0.6;
+      text-align: center;
+    }
+
+    &-icon {
+      cursor: pointer;
+      margin-left: 10px;
+      :hover {
+        color: #3674ff;
+       // display: block;
+      }
+    }
     .ant-form-item {
       margin-bottom: 10px; /* Расстояние между элементами формы */
+      width: 100%; /* Ширина формы занимает всю доступную ширину */
     }
 
   }
 
     &-avatar {
+        $item: &;
         position: relative;
         width: 150px;
         height: 150px;
@@ -36,7 +59,64 @@
           height: 100%;
           border-radius: 50%;
         }
+
+        &-icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          opacity: 0;
+          cursor: pointer;
       }
+      
+        &-overlay {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0, 0.3);
+          opacity: 0;
+          transition: opasity 0.15s ease-in-out;         
+          border-radius: 150px;
+        }
+
+        &:hover {
+          #{$item}-overlay {
+            opacity: 1;
+          } 
+
+          #{$item}-icon {
+            opacity: 1;
+          }
+        }
+
+  }
+
+  &-modalОк{
+    .ant-modal-content {
+      width: 600px;
+      height: 170px;
+    }
+  }
+
+  &-modal {
+    .ant-modal-content {
+      width: 600px;
+      height: 220px;
+    }
+    &-text {
+      font-family: "Comfortaa";
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 20px;
+      flex: 1 1;
+      opacity: 0.6;
+      text-align: center;
+      margin-bottom: 20px;  
+    }
+  }
 
       &-button {
         margin-top: 20px; /* Расстояние между формой и кнопкой */

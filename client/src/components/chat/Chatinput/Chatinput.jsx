@@ -61,7 +61,8 @@ const Chatinput = props => {
                     </div>
                 ) : (
                     <TextArea 
-                        onChange={e => setValue(e.target.value)} 
+
+                        onChange={e => setValue(e.target.value) } 
                         onKeyUp={handleSendMessage}
                         size="large" 
                         placeholder='Введите текст сообщения...'

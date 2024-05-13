@@ -6,8 +6,6 @@ import messagesActions from '../reducers/actions/messages';
 import attachmentsActions from '../reducers/actions/attachments';
 import filesAPI from '../core/files';
 import BaseChatInput from '../components/chat/Chatinput/Chatinput';
-import { CodeSandboxCircleFilled } from '@ant-design/icons';
-import { set } from 'date-fns';
 
 import socket from '../core/socket';
 

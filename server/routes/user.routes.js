@@ -12,7 +12,7 @@ const userRouter = (io) => {
     router.get('/register', UserCtr.getUsers)
     router.get('/register/:id', UserCtr.getOneUser)
     router.get('/me', UserCtr.getme)
-    router.put('/register', UserCtr.updateUser)
+    router.put('/update', UserCtr.updateUser)
     router.delete('/register/:id', UserCtr.deleteUser)
     router.post('/login', UserCtr.loginUser)
     return router;
