@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { AppBar, Box, CssBaseline, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography, Button } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Link, useNavigate } from 'react-router-dom';
@@ -38,7 +39,7 @@ const whiteTheme = createTheme({
   },
 });
 
-const userToken = localStorage.token
+const userToken = localStorage.token;
 
 const UserLogout = () => {
   store.dispatch(Actions.fetchUserLogout());
@@ -131,6 +132,23 @@ export default function DrawerAppBar(props: Props) {
             >
               вДоме
             </Typography>
+            { userToken ? (
+              <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                ml: 3,
+                display: { xs: 'none', sm: 'block' },
+                fontFamily: 'Comfortaa',
+                fontWeight: 700,
+                fontSize: '14px',
+                color: Colors.const.blue,
+                marginRight: '20px'
+              }}
+            >
+              Добрый день!
+            </Typography>
+            ): null }
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               {isTokenAuth(userToken).map((item) => (
                 <Link key={item.text} to={item.route} onClick={item.onClick} >
@@ -140,7 +158,7 @@ export default function DrawerAppBar(props: Props) {
                       color: Colors.const.blue,
                       fontFamily: 'Montserrat',
                       fontWeight: 700,
-                      fontSize: '14px',
+                      fontSize: '14px'
                     }}
                   >
                     {item.text}
@@ -174,3 +192,4 @@ export default function DrawerAppBar(props: Props) {
     </Box>
   );
 };
+

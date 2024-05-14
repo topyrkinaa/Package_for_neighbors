@@ -13,7 +13,7 @@ const getBase64 = (file) =>
   });
 
 
-  const UploadFiles = ({ attachments, removeAttachments }) => {
+  const UploadFiles = ({ attachments, removeAttachments, handlePreview, handleChange }) => {
     const [state, setState] = useState({
       previewVisible: false,
       previewImage: "",

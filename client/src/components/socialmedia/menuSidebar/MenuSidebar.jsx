@@ -3,6 +3,7 @@ import { IssuesCloseOutlined, UserOutlined, CalculatorOutlined, HomeOutlined, Me
 import { useNavigate } from 'react-router-dom';
 
 import Cabinet from '../../../containers/Cabinet';
+import NewsFeed from '../../../containers/NewsFeed';
 import Receipts from '../../../containers/Receipts';
 
 
@@ -23,17 +24,22 @@ const MenuSidebar = ({ user, onClick, fild  }) => {
           return <Receipts />;
       } else if (fild === "cabinet") {
           return <Cabinet />;
-      } 
+      }  else if (fild === "newsFeed"){
+        return <NewsFeed />
+      }
   };
 
     return (
        <div className="menu">
         <div className="menu__sidebar">
     
-            {/*<div className="menu__sidebar-button">
-               <HomeOutlined />
+            {<div className="menu__sidebar-button"
+            onClick={() => onClick('newsFeed')}
+            >
+                <HomeOutlined />
+                
               <p className='menu__text-pp'>Главная страница</p>
-            </div>*/}
+            </div>}
     
             <div 
               className="menu__sidebar-button"

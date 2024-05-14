@@ -43,8 +43,8 @@
         height: 40px;
         width: 400px;
         border-radius: 0 60px 60px 0;
-        background-color: #fff;
-        color: #0546F0;
+        background-color: #0546F0;
+        color: #fff;
         display: flex;
         align-items: center;
         padding-left: 5px;
@@ -52,8 +52,7 @@
         transition: background-color 0.3s, color 0.3s;
 
         &:hover {
-          color: #fff; /* Изменяем цвет текста при наведении */
-          background-color: #0546F0; /* Изменяем цвет фона при наведении */
+          opacity: 0.8;
         }
             .anticon {
                 margin-right: 15px;

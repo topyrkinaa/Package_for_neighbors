@@ -43,7 +43,6 @@ const renderLastMessage = (message, userId) => {
   } else {
     text = message.title;
   }
-
     return (reactStringReplace((message.authorid === userId 
       ? `Вы  ${text}`: `${text}`), /:(.+?):/g, (match,i) => (
         <em-emoji id={match} set="apple"></em-emoji>
