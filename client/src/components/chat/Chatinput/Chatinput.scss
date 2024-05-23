@@ -1,0 +1,57 @@
+.chat-input {
+    margin: 20px;
+    position: relative;
+    
+    & > div:first-of-type {
+        display: flex;
+    }
+    &__smile-btn {
+        margin-right: 15px;
+        margin-top: 7px;
+
+    }
+    .ant-btn-circle {   
+        .anticon {
+            font-size: 20px;
+            cursor: pointer;
+        }
+    }
+
+    &__emoji-picker {
+        position: absolute;
+        bottom: 50px;
+        z-index: 1;
+    }
+    
+    &__attachments {
+        padding-top: 10px;
+        padding-left: 65px;
+        
+        .ant-upload-list-item .ant-upload-list-item-done .anticon {
+            position: relative;
+            height: 80px;
+            border: 0;
+            width: 80px;
+            overflow: hidden;
+            padding: 0px;
+            border-radius: 8px;
+            
+        }
+      }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        width: 80px;
+        justify-content: space-between;
+        margin-left: 15px;
+    }
+
+    input {
+        height: 48px;
+        padding:  6px 11px 8px;
+        &:focus{
+            box-shadow: none;
+        }
+    }
+}

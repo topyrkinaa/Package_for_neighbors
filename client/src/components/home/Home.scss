@@ -1,0 +1,64 @@
+.promo {
+    display: flex;
+    width: 1440px;
+    height: 675px; /* Высота экрана */
+    background: #fff;
+    margin: 0 auto;
+    box-shadow: 2px 2px 5px rgba(5, 70, 240, 0.25);
+  
+    &__content {
+      background: url('../../assets//img//home__img.png') no-repeat center top;
+      flex-grow: 1; 
+      background-blend-mode: multiply;
+      background-size: cover;
+      object-fit: cover;
+      height: 675px;
+      width: 1440px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  
+    &__text {
+        height: 110px;
+        width: 500px;
+        border-radius: 0 60px 60px 0;
+        background-color: #0546F0;
+        color: #fff;
+        margin-bottom: 50px;
+        padding-left: 5px;
+      &-hh {
+        font-family: 'Montserrat';
+        font-weight: 700;
+        font-size: 45px;
+      }
+      &-pp {
+        font-family: 'Comfortaa';
+        font-weight: 700;
+        font-size: 22px;
+      }
+    }
+  
+    &__info {
+        height: 40px;
+        width: 400px;
+        border-radius: 0 60px 60px 0;
+        background-color: #fff;
+        color: #0546F0;
+        display: flex;
+        align-items: center;
+        padding-left: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+          color: #fff; /* Изменяем цвет текста при наведении */
+          background-color: #0546F0; /* Изменяем цвет фона при наведении */
+        }
+            .anticon {
+                margin-right: 15px;
+                font-size: 22px;
+            }
+    }
+  }
+  

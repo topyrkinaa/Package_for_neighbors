@@ -1,21 +1,47 @@
 const express = require('express')
-const config = require('config')
+const dotenv = require('dotenv')
+const {createServer} = require('http')
+
+dotenv.config()
+
 const userRouter = require('./routes/user.routes')
+const dialogRouter = require('./routes/dialog.routes')
+
+const uploadRouter = require('./routes/upload.routes')
+const messageRouter = require('./routes/message.routes')
 const corsMiddlecare = require('./middleware/cors.middleware')
+const authMiddlecare = require('./middleware/checkAuth.middleware')
+//const updateLastSeen = require('./middleware/updateLastSeen.middleware')
+
+const createSocket = require('./core/io.socket')
 
 const app = express()
-const PORT = config.get('serverPort')
+const http = createServer(app)
+const io = createSocket(http);
+
 
 app.use(corsMiddlecare)
-app.use(express.json())
+app.use(authMiddlecare)
+//app.use(updateLastSeen)
+app.use(express.json())       
+
 
 const start =  async () => {
     try {
-        app.use(express.json())
-        app.use('/api/auth', userRouter)
-        app.listen(PORT, () => {
-            console.log('Server started on port ', PORT)
+        app.use('/api/auth', userRouter(io))
+        app.use('/api/chat', dialogRouter(io))
+        app.use('/api/chat', messageRouter(io))
+        app.use('/api', uploadRouter())
+        
+
+        /*io.on('connection', function(socket) {
+            console.log('CONNECTED!');
+        });*/
+
+        http.listen(process.env.PORT, () => {
+            console.log(`Server: http://localhost:${process.env.PORT}`)
         })
+        
     } catch (e) {
 
     }

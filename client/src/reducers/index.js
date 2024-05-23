@@ -1,8 +1,15 @@
 import { combineReducers } from "redux";
-import auth from "./auth";
-import message from "./message";
+
+const reducers = ['messages','dialogs', 'user', 'attachments'];
+
+import user from './user';
+import dialogs from './dialogs';
+import messages from './messages';
+import attachments from './attachments';
 
 export default combineReducers({
-  auth,
-  message,
+  user,
+  dialogs,
+  messages,
+  attachments
 });

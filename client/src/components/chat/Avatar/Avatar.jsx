@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import md5 from "md5";
 
 import generateAvatarFromHash from '../../../utils/helpers/generateAvatarFromHash';
 
@@ -11,13 +12,14 @@ const Avatar = ({ user }) => {
       <img
         className="avatar"
         src={user.avatar}
-        alt={`Avatar ${user.fullname}`}
+        alt={`Avatar ${user.username}`}
       />
     );
   }
 
-  const { color, colorLighten } = generateAvatarFromHash(user.id);
-  const firstChar = user.fullname[0].toUpperCase();
+
+  const { color, colorLighten } = generateAvatarFromHash(md5(user.id));
+  const firstChar = user.username[0].toUpperCase();
   
   return (
     <div
@@ -34,7 +36,7 @@ const Avatar = ({ user }) => {
 Avatar.defaultProps = {
   user: {
     avatar: '',
-    fullname: '',
+    username: '',
     id: ''
   }
 };

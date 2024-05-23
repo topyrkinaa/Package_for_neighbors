@@ -11,8 +11,8 @@ import { AnyAction } from 'redux';
 
 import MessagesRegister from '../register/register.messages';
 import Colors from '../../../utils/colors';
-import {login} from '../../../action/user';
 
+import Actions from '../../../reducers/actions/user';
 
 const fieldSchema = {
   email: z.string().email({ message: MessagesRegister.errors.email }),
@@ -33,6 +33,7 @@ function Login() {
   const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
   const navigate = useNavigate();
 
+
   const {
     register,
     handleSubmit,
@@ -46,13 +47,16 @@ function Login() {
 
   // обработчик отправки формы
   const onSubmit: SubmitHandler<ShemaType> = (data) => {
-    dispatch(login(data.email, data.password))
-    .then(() => {
-      navigate("/chat");
-      window.location.reload();
+    dispatch(Actions.fetchUserLogin(data)).then(({ status }) => {
+      if (status === 'success') {
+        setTimeout(() => {
+          navigate("/homesocial");
+        }, 1000)
+      }
     })
   };
 
+  
   useEffect(() => {
     // устанавливаем фокус на первое поле (имя пользователя) после монтирования компонента
     setFocus('email');
